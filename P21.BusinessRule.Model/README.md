@@ -1,10 +1,10 @@
 # DynaChange&trade; Business Rule focus
 
-![DynaChange&trade; Rules](https://github.com/Epicor/Prophet21/Extensibility/P21.Extensions/lib/assets)
+![DynaChange&trade; Rules](https://github.com/Epicor/Prophet21/tree/master/Extensibility/P21.Extensions/lib/assets)
 
 This folder contains code for extending Prophet 21 via DynaChange&trade; Business Rules.
 
-## P21.BusinessRules
+## P21.BusinessRule.Model
 
 A package project for custom rules to inherit for simplifying configuration and logging.
 
