@@ -1,11 +1,26 @@
-﻿using P21.Extensions.BusinessRule;
+﻿using P21.BusinessRule.BLL;
+using P21.Extensions.BusinessRule;
 using System;
 
-namespace P21.BusinessRule.Model
+namespace P21.BusinessRule
 {
 	public abstract class BaseRule : Rule, IDisposable
 	{
+		private LogicLayer _logic;
 		private bool disposedValue;
+		internal IRuleLogger Logger { get; private set; }
+
+		internal LogicLayer Logic
+		{
+			get
+			{
+				if (_logic == null)
+				{
+					_logic = new LogicLayer(this, Logger);
+				}
+				return _logic;
+			}
+		}
 
 		public void Dispose()
 		{
@@ -18,7 +33,6 @@ namespace P21.BusinessRule.Model
 		{
 			return this.GetType().Name;
 		}
-
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!disposedValue)
