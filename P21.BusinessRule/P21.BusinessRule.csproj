@@ -36,6 +36,7 @@
       <HintPath>..\lib\P21.Extensions.22.1.4585\P21.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,7 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRule.cs" />
+    <Compile Include="BLL\LogicLayer.cs" />
+    <Compile Include="Models\Enumerations\LogLevel.cs" />
+    <Compile Include="BLL\Interfaces\IRuleLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BLL\Implementations\" />
+    <Folder Include="DAL\Contexts\" />
+    <Folder Include="DAL\DataModels\" />
+    <Folder Include="DAL\Repositories\" />
+    <Folder Include="Models\DataTransferObjects\" />
+    <Folder Include="Models\Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
