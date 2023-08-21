@@ -1,0 +1,114 @@
+Server Error in '/wvr' Application.
+Compilation Error
+Description: An error occurred during the compilation of a resource required to service this request. Please review the following specific error details and modify your source code appropriately.
+
+Compiler Error Message: The compiler failed with error code -532462766.
+
+
+Show Detailed Compiler Output:
+
+c:\windows\system32\inetsrv>\\p21us.epicordistribution.com\behleryoungFiles\Shared\WebVisualRules\Play\bin\roslyn\csc.exe /t:library /utf8output /nostdlib+ /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorlib.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Runtime.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Activities\v4.0_4.0.0.0__31bf3856ad364e35\System.Activities.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml.Linq\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.Linq.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\67a998ef\0024b275_7228d601\System.Web.Http.WebHost.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorlib.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ComponentModel.DataAnnotations\v4.0_4.0.0.0__31bf3856ad364e35\System.ComponentModel.DataAnnotations.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.WorkflowServices\v4.0_4.0.0.0__31bf3856ad364e35\System.WorkflowServices.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_64\System.EnterpriseServices\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.EnterpriseServices.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\cd560b3e\0051e376_7228d601\System.Net.Http.Formatting.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel\v4.0_4.0.0.0__b77a5c561934e089\System.ServiceModel.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Web.Services\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Web.Services.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\219c41d9\00bbd297_6418cf01\WebGrease.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Web.Extensions\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.Extensions.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\6a4fcaaa\00940b1d_c9f8d401\Newtonsoft.Json.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Web.DynamicData\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.DynamicData.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\43e5fc4b\00aead1a_5f27cf01\System.Web.Optimization.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\01590682\00045a4e_4d72d801\System.Web.WebPages.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel.Activation\v4.0_4.0.0.0__31bf3856ad364e35\System.ServiceModel.Activation.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\a0ad3755\0024b275_7228d601\Epicor.P21.Popup.Model.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\Microsoft.CSharp\v4.0_4.0.0.0__b03f5f7f11d50a3a\Microsoft.CSharp.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_64\System.Web\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Web.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\980fae44\80ba4a76_7228d601\System.Web.Http.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\0f0949f6\00d0a76d_64aece01\Antlr3.Runtime.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Web.ApplicationServices\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.ApplicationServices.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Data.DataSetExtensions\v4.0_4.0.0.0__b77a5c561934e089\System.Data.DataSetExtensions.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\060b11dc\00153d41_4d72d801\System.Web.Helpers.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\8806291f\0024b275_7228d601\App_global.asax.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.IdentityModel\v4.0_4.0.0.0__b77a5c561934e089\System.IdentityModel.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\da7cf3a7\00236448_4d72d801\System.Web.Razor.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel.Activities\v4.0_4.0.0.0__31bf3856ad364e35\System.ServiceModel.Activities.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\f9eab5e3\005ebc50_4d72d801\System.Web.Mvc.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\d4e77a44\00248a67_29a9d901\P21.BusinessRule.Model.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\7fc5c2a7\0093b548_7dd4d901\P21.Rules.Visual.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\dcdc2dd7\00a73b60_4d72d801\System.Web.WebPages.Deployment.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_64\System.Data\v4.0_4.0.0.0__b77a5c561934e089\System.Data.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\cc9ced74\00019e62_4d72d801\System.Web.WebPages.Razor.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\242596fb\0001468a_5445d401\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\20cf602f\80dc1477_4425d901\P21.Extensions.dll" /
+R:"C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel.Web\v4.0_4.0.0.0__31bf3856ad364e35\System.ServiceModel.Web.dll" /
+R:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\assembly\dl3\69a5d7f9\00ab7cdf_4c72d801\Microsoft.Web.Infrastructure.dll" /
+out:"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\App_Web_about.cshtml.a8d08dba.zod4k8rc.dll" /
+D:DEBUG /debug+ /optimize- /warnaserror- /w:4 /nowarn:1659;1699;1701;612;618 /
+langversion:default /nowarn:1659;1699;1701  
+"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\App_Web_about.cshtml.a8d08dba.zod4k8rc.0.cs" 
+"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\wvr\2d97a0d8\69b12ea6\App_Web_about.cshtml.a8d08dba.zod4k8rc.1.cs"
+
+
+
+
+Version Information: Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.8.4654.0
+
+
+
+
+
+__________________________________________________
+
+
+Server Error in '/wvr' Application.
+Could not load file or assembly 'Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+Exception Details: System.IO.FileLoadException: Could not load file or assembly 'Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+
+Source Error:
+
+An unhandled exception was generated during the execution of the current web request. Information regarding the origin and location of the exception can be identified using the exception stack trace below.
+
+Assembly Load Trace: The following information can be helpful to determine why the assembly 'Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' could not be loaded.
+
+
+WRN: Assembly binding logging is turned OFF.
+To enable assembly bind failure logging, set the registry value [HKLM\Software\Microsoft\Fusion!EnableLog] (DWORD) to 1.
+Note: There is some performance penalty associated with assembly bind failure logging.
+To turn this feature off, remove the registry value [HKLM\Software\Microsoft\Fusion!EnableLog].
+
+Stack Trace:
+
+
+[FileLoadException: Could not load file or assembly 'Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)]
+   System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMarkHandle stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName, ObjectHandleOnStack type) +0
+   System.RuntimeTypeHandle.GetTypeByName(String name, Boolean throwOnError, Boolean ignoreCase, Boolean reflectionOnly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean loadTypeFromPartialName) +96
+   System.Type.GetType(String typeName) +62
+   System.CodeDom.Compiler.CompilerInfo.get_IsCodeDomProviderTypeValid() +15
+   System.Web.Compilation.CompilationUtil.GetRecompilationHash(CompilationSection ps) +2406
+   System.Web.Configuration.CompilationSection.get_RecompilationHash() +110
+   System.Web.Compilation.BuildManager.CheckTopLevelFilesUpToDateInternal(Int64 cachedHash) +551
+   System.Web.Compilation.BuildManager.CheckTopLevelFilesUpToDate(Int64 cachedHash) +59
+   System.Web.Compilation.BuildManager.ExecutePreAppStart() +155
+   System.Web.Hosting.HostingEnvironment.Initialize(ApplicationManager appManager, IApplicationHost appHost, IConfigMapPathFactory configMapPathFactory, HostingEnvironmentParameters hostingParameters, PolicyLevel policyLevel, Exception appDomainCreationException) +746
+
+[HttpException (0x80004005): Could not load file or assembly 'Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)]
+   System.Web.HttpRuntime.FirstRequestInit(HttpContext context) +552
+   System.Web.HttpRuntime.EnsureFirstRequestInit(HttpContext context) +122
+   System.Web.HttpRuntime.ProcessRequestNotificationPrivate(IIS7WorkerRequest wr, HttpContext context) +737
+
+Version Information: Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.8.4654.0
