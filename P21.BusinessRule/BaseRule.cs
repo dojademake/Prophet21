@@ -180,6 +180,7 @@ namespace P21.BusinessRule
 			}
 			return result;
 		}
+		
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!disposedValue)
