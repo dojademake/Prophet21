@@ -76,6 +76,7 @@
     <Compile Include="Database\system_setting.cs" />
     <Compile Include="Database\sys_params_p21.cs" />
     <Compile Include="Database\user.cs" />
+    <Compile Include="Services\BusinessRuleService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
