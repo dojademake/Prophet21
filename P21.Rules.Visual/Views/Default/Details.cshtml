@@ -8,6 +8,29 @@
 
 <div>
 
+    @if (Model != null && Model.RuleState != null && Model.RuleState.MultiRow)
+    {
+        <div class="form-horizontal">
+            @foreach (System.Data.DataTable tbl in Model.Data.Set.Tables)
+            {
+                <h3>@tbl.TableName</h3>
+
+                var grid = new System.Web.Helpers.WebGrid(Model.GetDatatableAsList(tbl), canPage: true, canSort: true, rowsPerPage: 2);
+                grid.Pager(WebGridPagerModes.NextPrevious);
+
+                <div>
+                    @(grid.GetHtml(htmlAttributes: new
+                {
+                    id = $"{tbl.TableName}_grid",
+                    @class = "table table-bordered table-striped table-condensed"
+                },
+                emptyRowCellValue: $"No {tbl.TableName} Records Found",
+                headerStyle: "grid-header"))
+                </div>
+            }
+        </div>
+    }
+
     <h3>RuleState Details</h3>
     <hr />
     <dl class="dl-horizontal">
