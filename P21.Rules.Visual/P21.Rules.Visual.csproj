@@ -219,9 +219,9 @@
       <Project>{2838fd01-df39-46df-a5c8-3915adb59c64}</Project>
       <Name>P21.BusinessRule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\P21.Shared\P21.Shared.csproj">
-      <Project>{b4ec3bf3-b75b-4ac7-b08b-5b1a717a164e}</Project>
-      <Name>P21.Shared</Name>
+    <ProjectReference Include="..\P21.Entity\P21.Entity.csproj">
+      <Project>{CAF7E77F-6C60-4C16-B52D-A04D5F3FFCC4}</Project>
+      <Name>P21.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
