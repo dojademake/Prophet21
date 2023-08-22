@@ -20,7 +20,7 @@ textarea {
 }
 
 #formattedXml {
-    height: 10vh; /* Sets the height to 10% of the viewport height */
+    height: 15vh; /* Sets the height to 10% of the viewport height */
     overflow-y: auto; /* Adds a vertical scrollbar when the content exceeds the height */
     box-sizing: border-box; /* Ensures padding and border are included in the dimensions */
 }
