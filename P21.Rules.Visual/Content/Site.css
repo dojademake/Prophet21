@@ -19,10 +19,16 @@ textarea {
     max-width: 280px;
 }
 
-pre {
-    overflow-x: auto;
+#formattedXml {
+    height: 10vh; /* Sets the height to 10% of the viewport height */
+    overflow-y: auto; /* Adds a vertical scrollbar when the content exceeds the height */
+    box-sizing: border-box; /* Ensures padding and border are included in the dimensions */
 }
 
-code {
-    white-space: pre-wrap;
+#rawXml {
+    display: block; /* This ensures the textarea is visible */
+    width: 100%; /* Makes the textarea span the full width of its parent container */
+    height: 25vh; /* Sets the height of the textarea to 25% of the viewport height */
+    box-sizing: border-box; /* This ensures padding and border are included in the width and height */
+    resize: vertical; /* Allows users to resize the textarea vertically, but not horizontally */
 }
