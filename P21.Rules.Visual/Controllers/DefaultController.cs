@@ -9,6 +9,7 @@ namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
+        //private BusinessRuleService service = new BusinessRuleService();
         // GET: Default
         public ActionResult Index()
         {
