@@ -18,3 +18,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+pre {
+    overflow-x: auto;
+}
+
+code {
+    white-space: pre-wrap;
+}

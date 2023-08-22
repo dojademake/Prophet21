@@ -15,7 +15,16 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.XmlData)
+            <div class="container mt-4">
+                <span class="border p-3 bg-light">
+                    <pre>
+                    <code id="xmlContent">
+                            @Html.DisplayFor(model => model.XmlData)
+                        </code>     
+                    </pre>
+                </span>
+            </div>
+
         </dd>
 
     </dl>
@@ -24,3 +33,11 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/beautify")
+    <script>
+        const xml = `<your-xml-content-here>`;
+        document.getElementById('xmlContent').textContent = beautifyXml(xml);
+    </script>
+}
