@@ -17,11 +17,8 @@
         <dd>
             <div class="container mt-4">
                 <span class="border p-3 bg-light">
-                    <pre>
-                    <code id="xmlContent">
-                            @Html.DisplayFor(model => model.XmlData)
-                        </code>     
-                    </pre>
+                    <textarea id="rawXml" style="display:none;">@(Model.XmlData?.Trim() ?? string.Empty)</textarea>
+                    <pre id="formattedXml"></pre>
                 </span>
             </div>
 
@@ -35,9 +32,16 @@
 </p>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/beautify")
     <script>
-        const xml = `<your-xml-content-here>`;
-        document.getElementById('xmlContent').textContent = beautifyXml(xml);
+        document.addEventListener("DOMContentLoaded", function () {
+            const rawXml = document.getElementById('rawXml').value;
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(rawXml, "text/xml");
+
+            const serializer = new XMLSerializer();
+            const prettyXml = serializer.serializeToString(xmlDoc);
+
+            document.getElementById('formattedXml').textContent = prettyXml;
+        });
     </script>
 }
