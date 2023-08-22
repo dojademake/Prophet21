@@ -1,4 +1,5 @@
-﻿using P21.Extensions.Web;
+﻿using P21.Entity.Services;
+using P21.Extensions.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
-        //private BusinessRuleService service = new BusinessRuleService();
+        private BusinessRuleService service = new BusinessRuleService();
         // GET: Default
         public ActionResult Index()
         {
-            return View();
+            var result = service.GetAllRules();
+            return View(result);
         }
 
         // GET: Default/Details/5
