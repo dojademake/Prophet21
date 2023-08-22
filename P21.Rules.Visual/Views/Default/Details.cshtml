@@ -4,10 +4,162 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Web Business Rule</h2>
 
 <div>
-    <h4>BaseRule</h4>
+
+    <h3>RuleState Details</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.RuleState.UID)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.UID)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.Name)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.Name)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.Type)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.Type)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.ApplyOn)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.ApplyOn)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.MultiRow)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.MultiRow)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.RunType)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.RunType)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.EventName)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.EventName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.EventType)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.EventType)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.CascadeInProgress)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.CascadeInProgress)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.ThemeName)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.ThemeName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.TriggerWindowName)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.TriggerWindowName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.TriggerWindowTitle)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.TriggerWindowTitle)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.ApplicationDisplayMode)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.ApplicationDisplayMode)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.ClientPlatform)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.ClientPlatform)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.RulePageUrl)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.RulePageUrl)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.IsCallbackRule)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.IsCallbackRule)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RuleState.CallbackParentRule)</dt>
+        <dd>@Html.DisplayFor(model => model.RuleState.CallbackParentRule)</dd>
+    </dl>
+
+
+    <h3>Session Details</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.UserID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.Version)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.Version)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.Server)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.Server)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.Database)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.Database)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.Language)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.Language)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.MultiRow)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.MultiRow)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.ConfigurationID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.ConfigurationID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.RFLocationID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.RFLocationID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.RFBinID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.RFBinID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.ApplicationDisplayMode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.ApplicationDisplayMode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.ClientPlatform)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.ClientPlatform)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session.WorkstationID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Session.WorkstationID)
+        </dd>
+    </dl>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
