@@ -7,17 +7,17 @@
 <h2>Harness</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>BaseRule</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Test" class="btn btn-default" />
+                <input type="submit" value="Test" class="btn btn-outline-primary" />
             </div>
         </div>
     </div>
