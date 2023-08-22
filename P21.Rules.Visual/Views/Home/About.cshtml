@@ -5,5 +5,9 @@
     <h2 id="title">@ViewBag.Title.</h2>
     <h3>@ViewBag.Message</h3>
 
-    <p>Use @Html.ActionLink("this", "Index", "Initialize", new { ruleController = "Default", ruleAction = "Details" }, new { @class = "btn btn-primary" })  <a href="~/Initialize?ruleController=Default&ruleAction=Details">area</a> to provide additional information.</p>
+    <p>
+        Use @Html.ActionLink("this", "Index", "Initialize", new { ruleController = "Default", ruleAction = "Details" }, new { @class = "text-primary" })
+        <a href="~/Default/Details" class="text-secondary">area</a>
+        to provide additional information.
+    </p>
 </main>
