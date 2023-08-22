@@ -43,38 +43,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="business_object_key_fields.cs" />
-    <Compile Include="business_rule.cs" />
-    <Compile Include="business_rule_data_element.cs" />
-    <Compile Include="business_rule_event.cs" />
-    <Compile Include="business_rule_event_class.cs" />
-    <Compile Include="business_rule_event_extd_info.cs" />
-    <Compile Include="business_rule_event_key.cs" />
-    <Compile Include="business_rule_log.cs" />
-    <Compile Include="business_rule_rmb.cs" />
-    <Compile Include="business_rule_x_roles.cs" />
-    <Compile Include="business_rule_x_users.cs" />
-    <Compile Include="code_group_p21.cs" />
-    <Compile Include="code_p21.cs" />
-    <Compile Include="code_x_code_group_p21.cs" />
-    <Compile Include="code_x_code_p21.cs" />
-    <Compile Include="grow_metric.cs" />
-    <Compile Include="ribbon.cs" />
-    <Compile Include="ribbon_metric.cs" />
-    <Compile Include="ribbon_metric_x_roles.cs" />
-    <Compile Include="ribbon_metric_x_users.cs" />
-    <Compile Include="ribbon_tab.cs" />
-    <Compile Include="ribbon_tab_group.cs" />
-    <Compile Include="ribbon_tab_group_x_ribbon_tab.cs" />
-    <Compile Include="ribbon_tab_x_ribbon.cs" />
-    <Compile Include="ribbon_tool.cs" />
-    <Compile Include="ribbon_tool_x_ribbon_tab_group.cs" />
-    <Compile Include="role.cs" />
-    <Compile Include="system_alerts.cs" />
-    <Compile Include="system_parameters.cs" />
-    <Compile Include="system_setting.cs" />
-    <Compile Include="sys_params_p21.cs" />
-    <Compile Include="user.cs" />
+    <Compile Include="Models\business_rule.cs" />
+    <Compile Include="Models\business_rule_data_element.cs" />
+    <Compile Include="Models\business_rule_event.cs" />
+    <Compile Include="Models\business_rule_event_class.cs" />
+    <Compile Include="Models\business_rule_event_extd_info.cs" />
+    <Compile Include="Models\business_rule_event_key.cs" />
+    <Compile Include="Models\business_rule_log.cs" />
+    <Compile Include="Models\business_rule_rmb.cs" />
+    <Compile Include="Models\business_rule_x_roles.cs" />
+    <Compile Include="Models\business_rule_x_users.cs" />
+    <Compile Include="Models\code_group_p21.cs" />
+    <Compile Include="Models\code_p21.cs" />
+    <Compile Include="Models\code_x_code_group_p21.cs" />
+    <Compile Include="Models\code_x_code_p21.cs" />
+    <Compile Include="Models\grow_metric.cs" />
+    <Compile Include="Models\ribbon.cs" />
+    <Compile Include="Models\ribbon_metric.cs" />
+    <Compile Include="Models\ribbon_metric_x_roles.cs" />
+    <Compile Include="Models\ribbon_metric_x_users.cs" />
+    <Compile Include="Models\ribbon_tab.cs" />
+    <Compile Include="Models\ribbon_tab_group.cs" />
+    <Compile Include="Models\ribbon_tab_group_x_ribbon_tab.cs" />
+    <Compile Include="Models\ribbon_tab_x_ribbon.cs" />
+    <Compile Include="Models\ribbon_tool.cs" />
+    <Compile Include="Models\ribbon_tool_x_ribbon_tab_group.cs" />
+    <Compile Include="Models\role.cs" />
+    <Compile Include="Models\system_alerts.cs" />
+    <Compile Include="Models\system_parameters.cs" />
+    <Compile Include="Models\system_setting.cs" />
+    <Compile Include="Models\sys_params_p21.cs" />
+    <Compile Include="Models\user.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
@@ -84,8 +83,6 @@
   <ItemGroup>
     <None Include="App.Config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
