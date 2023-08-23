@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 /NuGet.Config
 /P21.Entity/App.Release.Config
+/P21.Rules.Visual/Web.Release.config
