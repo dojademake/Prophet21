@@ -1,4 +1,5 @@
-﻿using P21.Entity.Services;
+﻿using P21.Entity.Database;
+using P21.Entity.Services;
 using P21.Extensions.BusinessRule;
 using P21.Extensions.Web;
 using System;
@@ -21,8 +22,16 @@ namespace P21.Rules.Visual.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            var result = service.GetAllRules();
-            return View(result);
+            try
+            {
+                var result = service.GetAllRules().ToList();
+                return View(result);
+
+            }
+            catch (Exception ex)
+            {
+                return HandleException(String.Empty, ex, service.MaskedConnectionString);
+            }
         }
 
         // GET: Default/Details/5
@@ -95,6 +104,20 @@ namespace P21.Rules.Visual.Controllers
             {
                 return View();
             }
+        }
+
+        private ActionResult HandleException(string key, Exception ex, string errorMessage)
+        {
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                ModelState.AddModelError(key, errorMessage);
+            }
+            if (ex != null)
+            {
+                ModelState.AddModelError(key, ex);
+                ModelState.AddModelError(ex.GetType().Name, ex.Message);
+            }
+            return View();
         }
     }
 }

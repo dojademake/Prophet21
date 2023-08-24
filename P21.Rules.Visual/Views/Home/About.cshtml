@@ -10,4 +10,19 @@
         <a href="~/Default/Details" class="text-secondary">area</a>
         to provide additional information.
     </p>
+
+    <p>
+        <h3>Assembly Details</h3>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>FullName</dt>
+            <dd>@System.Reflection.Assembly.GetExecutingAssembly().FullName</dd>
+
+            <dt>Name</dt>
+            <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Name</dd>
+
+            <dt>Version</dt>
+            <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version</dd>
+        </dl>
+    </p>
 </main>
