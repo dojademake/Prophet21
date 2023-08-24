@@ -7,8 +7,8 @@ namespace P21.Entity.Database
 {
     public partial class P21DbContext : DbContext
     {
-        public P21DbContext()
-            : base("name=P21DbContext")
+        public P21DbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
         }
 
