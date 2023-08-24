@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>P21.BusinessRule.Model</RootNamespace>
     <AssemblyName>P21.BusinessRule.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="P21.Extensions">
-      <HintPath>..\lib\P21.Extensions.22.1.4585\P21.Extensions.dll</HintPath>
+      <HintPath>..\lib\P21.Extensions.21.2.4483\P21.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
