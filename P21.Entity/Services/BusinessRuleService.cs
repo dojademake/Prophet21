@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace P21.Entity.Services
 {
     public class BusinessRuleService
     {
         private P21DbContext p21Db;
+
+        public WebBusinessRule CurrentRule { get; set; }
 
         public P21DbContext Db
         {
@@ -28,7 +29,9 @@ namespace P21.Entity.Services
                             PersistSecurityInfo = false,
                             IntegratedSecurity = true, // Trusted Connection (Windows Authentication)
                             DataSource = CurrentRule.Session.Server,
-                            InitialCatalog = CurrentRule.Session.Database
+                            InitialCatalog = CurrentRule.Session.Database,
+                            MultipleActiveResultSets = true,
+                            ApplicationName = Assembly.GetExecutingAssembly().GetName().Name
                         };
                         p21Db = new P21DbContext(sqlConnection.ConnectionString);
                     }
@@ -49,7 +52,20 @@ namespace P21.Entity.Services
             set { p21Db = value; }
         }
 
-        public WebBusinessRule CurrentRule { get; set; }
+        public string MaskedConnectionString
+        {
+            get
+            {
+                string unmasked = Db.Database.Connection.ConnectionString;
+                int pwdIndex = unmasked.IndexOf("password");
+                if (pwdIndex < 1)
+                {
+                    pwdIndex = unmasked.Length;
+                }
+                string result = unmasked.Substring(0, Math.Min(pwdIndex, unmasked.Length));
+                return result;
+            }
+        }
 
         public IEnumerable<business_rule> GetAllRules()
         {
