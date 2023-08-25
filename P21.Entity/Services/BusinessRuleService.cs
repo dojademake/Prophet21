@@ -1,4 +1,5 @@
 ﻿using P21.Entity.Database;
+using P21.Extensions.BusinessRule;
 using P21.Extensions.Web;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace P21.Entity.Services
     {
         private P21DbContext p21Db;
 
-        public WebBusinessRule CurrentRule { get; set; }
+        public Rule CurrentRule { get; set; }
 
         public P21DbContext Db
         {
