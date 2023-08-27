@@ -1,5 +1,5 @@
-﻿using P21.Entity.Database;
-using P21.Entity.Services;
+﻿using P21Custom.Entity.Database;
+using P21Custom.Entity.Services;
 using P21.Extensions.BusinessRule;
 using P21.Extensions.Web;
 using P21.Rules.Visual.Utilities;
@@ -16,7 +16,7 @@ namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
-        private BusinessRuleService service = new BusinessRuleService();
+        private readonly BusinessRuleService service = new BusinessRuleService();
 
         public DefaultController()
         {
