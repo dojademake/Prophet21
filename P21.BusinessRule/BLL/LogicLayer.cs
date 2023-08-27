@@ -3,7 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 
-namespace P21.BusinessRule.BLL
+namespace P21Custom.Extensions.BusinessRule.BLL
 {
 	internal class LogicLayer
 	{
