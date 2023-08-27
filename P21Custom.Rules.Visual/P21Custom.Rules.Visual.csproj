@@ -191,9 +191,6 @@
     <Content Include="Views\Default\Details.cshtml" />
     <Content Include="Views\Default\Create.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -226,11 +223,11 @@
   <ItemGroup>
     <ProjectReference Include="..\P21Custom.Extensions\P21Custom.Extensions.csproj">
       <Project>{2838fd01-df39-46df-a5c8-3915adb59c64}</Project>
-      <Name>P21Custom.Extensions.BusinessRule</Name>
+      <Name>P21Custom.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\P21Custom.Entity\P21Custom.Entity.csproj">
       <Project>{CAF7E77F-6C60-4C16-B52D-A04D5F3FFCC4}</Project>
-      <Name>P21Custom.Extensions.Entity</Name>
+      <Name>P21Custom.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
