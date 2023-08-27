@@ -11,6 +11,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace P21.Rules.Visual.Controllers
 {
@@ -21,6 +24,7 @@ namespace P21.Rules.Visual.Controllers
         public DefaultController()
         {
             service.CurrentRule = Rule;
+            //service.RequestData = Request;
         }
 
         // GET: Default
@@ -104,9 +108,64 @@ namespace P21.Rules.Visual.Controllers
         }
 
         // GET: Default/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            //string binPath = Server.MapPath("~/bin");
+            //var dllFiles = Directory.GetFiles(binPath, "*.dll");
+
+            //var versions = new List<FileVersionInfo>();
+            //foreach (var file in dllFiles)
+            //{
+            //    var version = GetFileVerasion(file);
+            //    versions.Add(new FileVersionInfo() { FileName = Path.GetFileName(file), Version = version });
+            //}
+
+
+            string binPath = Server.MapPath("~/bin");
+            string[] dllFiles = Directory.GetFiles(binPath, "*.dll");
+
+            var versions = new List<FileVersionInfo>();
+            foreach (string dllFile in dllFiles)
+            {
+                try
+                {
+                    FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(dllFile);
+                    versions.Add(fileVersionInfo);
+
+                    // Display properties
+                    Console.WriteLine("File: " + dllFile);
+                    Console.WriteLine("Product Name: " + fileVersionInfo.ProductName);
+                    Console.WriteLine("Product Version: " + fileVersionInfo.ProductVersion);
+                    Console.WriteLine("File Version: " + fileVersionInfo.FileVersion);
+                    Console.WriteLine("Comments: " + fileVersionInfo.Comments);
+                    Console.WriteLine("Company Name: " + fileVersionInfo.CompanyName);
+                    Console.WriteLine("Original Filename: " + fileVersionInfo.OriginalFilename);
+                    Console.WriteLine("------------------------------------");
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions if necessary
+                    Console.WriteLine("Error reading file: " + dllFile);
+                    Console.WriteLine("Error details: " + ex.Message);
+                    Console.WriteLine("------------------------------------");
+                }
+            }
+
+            return View(versions);
+        }
+
+        private string GetFileVersion(string filePath)
+        {
+            try
+            {
+                var assembly = Assembly.LoadFile(filePath);
+                var version = assembly.GetName().Version;
+                return version.ToString();
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
         }
 
         // POST: Default/Delete/5
