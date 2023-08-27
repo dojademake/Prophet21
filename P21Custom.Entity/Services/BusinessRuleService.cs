@@ -59,7 +59,7 @@ namespace P21Custom.Entity.Services
             get
             {
                 string unmasked = Db.Database.Connection.ConnectionString;
-                int pwdIndex = unmasked.IndexOf("password");
+                int pwdIndex = unmasked.ToLower().IndexOf("password");
                 if (pwdIndex < 1)
                 {
                     pwdIndex = unmasked.Length;
