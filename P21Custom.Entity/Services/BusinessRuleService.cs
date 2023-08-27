@@ -23,7 +23,7 @@ namespace P21Custom.Entity.Services
             {
                 if (p21Db == null)
                 {
-                    if (CurrentRule != null && CurrentRule.Session != null && CurrentRule.Session.Server.Contains(Environment.MachineName))
+                    if (CurrentRule != null && CurrentRule.Session != null && CurrentRule.Session.Server.Contains(Environment.MachineName.Substring(0, 5)))
                     {
                         //TODO: consider using EntityConnectionStringBuilder if metadata information for model mapping is required.
                         SqlConnectionStringBuilder sqlConnection = new SqlConnectionStringBuilder()

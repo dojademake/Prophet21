@@ -9,9 +9,16 @@
     </tr>
     @foreach (System.Diagnostics.FileVersionInfo dll in Model)
     {
-    <tr>
-        <td>@Html.DisplayFor(m => dll.OriginalFilename)</td>
-        <td>@Html.DisplayFor(m => dll.ProductVersion)</td>
-    </tr>
+        <tr>
+            @if (string.IsNullOrEmpty(dll.OriginalFilename))
+            {
+                <td colspan="2">@Html.DisplayFor(m => dll.FileName)</td>
+            }
+            else
+            {
+                <td>@Html.DisplayFor(m => dll.OriginalFilename)</td>
+                <td>@Html.DisplayFor(m => dll.ProductVersion)</td>
+            }
+        </tr>
     }
 </table>

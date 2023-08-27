@@ -110,19 +110,22 @@ namespace P21.Rules.Visual.Controllers
         // GET: Default/Delete/5
         public ActionResult Delete(string id)
         {
-            //string binPath = Server.MapPath("~/bin");
-            //var dllFiles = Directory.GetFiles(binPath, "*.dll");
+            string extension = "dll";
+            if (string.IsNullOrEmpty(id))
+            {
+                id = "bin";
+            }
+            else
+            {
+                if (id.Contains(","))
+                {
+                    extension = id.Split(',')[1];
+                    id = id.Split(',')[0];
+                }
+            }
 
-            //var versions = new List<FileVersionInfo>();
-            //foreach (var file in dllFiles)
-            //{
-            //    var version = GetFileVerasion(file);
-            //    versions.Add(new FileVersionInfo() { FileName = Path.GetFileName(file), Version = version });
-            //}
-
-
-            string binPath = Server.MapPath("~/bin");
-            string[] dllFiles = Directory.GetFiles(binPath, "*.dll");
+            string binPath = Server.MapPath($"~/{id}");
+            string[] dllFiles = Directory.GetFiles(binPath, $"*.{extension}");
 
             var versions = new List<FileVersionInfo>();
             foreach (string dllFile in dllFiles)
