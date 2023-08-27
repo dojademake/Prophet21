@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 
 namespace P21Custom.Entity.Services
 {
@@ -22,7 +23,7 @@ namespace P21Custom.Entity.Services
             {
                 if (p21Db == null)
                 {
-                    if (CurrentRule != null && CurrentRule.Session != null)
+                    if (CurrentRule != null && CurrentRule.Session != null && CurrentRule.Session.Server.Contains(Environment.MachineName))
                     {
                         //TODO: consider using EntityConnectionStringBuilder if metadata information for model mapping is required.
                         SqlConnectionStringBuilder sqlConnection = new SqlConnectionStringBuilder()
@@ -38,15 +39,15 @@ namespace P21Custom.Entity.Services
                     }
                     else
                     {
-                        if (Debugger.IsAttached)
-                        {
-                            p21Db = new P21DbContext("name=RemoteConnectionString");
-                        }
-                        else
+                        //if (RequestData != null && !RequestData.Url.ToString().Contains("localhost"))
                         {
                             p21Db = new P21DbContext("name=P21ConnectionString");
                         }
                     }
+                }
+                if (p21Db == null)
+                {
+                    p21Db = new P21DbContext("name=RemoteConnectionString");
                 }
                 return p21Db;
             }
@@ -67,6 +68,8 @@ namespace P21Custom.Entity.Services
                 return result;
             }
         }
+
+        //public HttpRequest RequestData { get; set; }
 
         public IEnumerable<business_rule> GetAllRules()
         {

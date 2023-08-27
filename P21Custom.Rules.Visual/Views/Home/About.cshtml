@@ -25,4 +25,85 @@
             <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version</dd>
         </dl>
     </p>
+
+    <div>
+        @if (!Environment.HasShutdownStarted)
+        {
+            <h3>Environment Properties</h3>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.OSVersion)</dt>
+                <dd>@Environment.OSVersion</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.Version)</dt>
+                <dd>@Environment.Version</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.CurrentDirectory)</dt>
+                <dd>@Environment.CurrentDirectory</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.ProcessorCount)</dt>
+                <dd>@Environment.ProcessorCount</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.CommandLine)</dt>
+                <dd>@Environment.CommandLine</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.CurrentManagedThreadId)</dt>
+                <dd>@Environment.CurrentManagedThreadId</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.Is64BitOperatingSystem)</dt>
+                <dd>@Environment.Is64BitOperatingSystem</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.Is64BitProcess)</dt>
+                <dd>@Environment.Is64BitProcess</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.MachineName)</dt>
+                <dd>@Environment.MachineName</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.StackTrace)</dt>
+                <dd>@Environment.StackTrace</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.SystemDirectory)</dt>
+                <dd>@Environment.SystemDirectory</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.SystemPageSize)</dt>
+                <dd>@Environment.SystemPageSize</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.TickCount)</dt>
+                <dd>@Environment.TickCount</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.UserDomainName)</dt>
+                <dd>@Environment.UserDomainName</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.UserInteractive)</dt>
+                <dd>@Environment.UserInteractive</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.UserName)</dt>
+                <dd>@Environment.UserName</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.WorkingSet)</dt>
+                <dd>@Environment.WorkingSet</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.HasShutdownStarted)</dt>
+                <dd>@Environment.HasShutdownStarted</dd>
+            </dl>
+        }
+    </div>
+
 </main>
