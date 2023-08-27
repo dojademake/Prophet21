@@ -1,4 +1,4 @@
-﻿namespace P21.BusinessRule
+﻿namespace P21Custom.Extensions.BusinessRule
 {
 	public enum LogLevel
 	{

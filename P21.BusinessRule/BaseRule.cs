@@ -1,11 +1,11 @@
-﻿using P21.BusinessRule.BLL;
+﻿using P21Custom.Extensions.BusinessRule.BLL;
 using P21.Extensions.BusinessRule;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace P21.BusinessRule
+namespace P21Custom.Extensions.BusinessRule
 {
 	public abstract class BaseRule : Rule, IDisposable
 	{
