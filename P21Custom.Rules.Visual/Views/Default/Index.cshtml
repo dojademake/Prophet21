@@ -1,0 +1,194 @@
+﻿@model IEnumerable<P21Custom.Entity.Database.business_rule>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.business_rule_event_key.key_value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rule_type_cd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rule_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.field_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.class_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apply_during_save_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apply_globally_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_by)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_last_modified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.last_maintained_by)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.row_status_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.run_for_all_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.window_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.window_title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.license_key)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apply_to_all_rows_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.multirow_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.business_rule_event_uid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.run_type_cd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.enabled_for_version_cd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.internal_rule_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rule_page_url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.show_rule_page_url_desktop_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.order_entry_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.front_counter_flag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rma_entry_flag)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.business_rule_event_key.key_value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rule_type_cd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rule_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.field_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.class_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apply_during_save_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apply_globally_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.created_by)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_last_modified)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.last_maintained_by)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.row_status_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.run_for_all_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.window_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.window_title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.license_key)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apply_to_all_rows_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.multirow_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.business_rule_event_uid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.run_type_cd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.enabled_for_version_cd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.internal_rule_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rule_page_url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.show_rule_page_url_desktop_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_entry_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.front_counter_flag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rma_entry_flag)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.business_rule_uid }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.business_rule_uid }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.business_rule_uid })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })

@@ -1,0 +1,185 @@
+﻿@{
+    ViewBag.Title = "About";
+    var serverVariables = HttpContext.Current.Request.ServerVariables;
+}
+
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <p>
+        Use @Html.ActionLink("this", "Index", "Initialize", new { ruleController = "Default", ruleAction = "Details" }, new { @class = "text-primary" })
+        <a href="~/Default/Details" class="text-secondary">area</a>
+        to provide additional information.
+    </p>
+
+    <p>
+        <h3>Assembly Details</h3>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>FullName</dt>
+            <dd>@System.Reflection.Assembly.GetExecutingAssembly().FullName</dd>
+
+            <dt>Name</dt>
+            <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Name</dd>
+
+            <dt>Version</dt>
+            <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version</dd>
+
+            <dt>Directories</dt>
+            <dd>
+                @*@Html.ActionLink("Areas", "Delete", "Default", new { id = "Areas,html" }, new { @class = "btn btn-outline" })*@
+                @Html.ActionLink("App_Data", "Delete", "Default", new { id = "App_Data,xml" }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("DLL", "Delete", "Default", new { id = "bin,dll" }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Content", "Delete", "Default", new { id = "Content,css" }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Scripts", "Delete", "Default", new { id = "Scripts,js" }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Views", "Delete", "Default", new { id = "Views,cshtml" }, new { @class = "btn btn-danger" })
+            </dd>
+        </dl>
+    </p>
+
+    <div>
+        @if (!Environment.HasShutdownStarted)
+        {
+            <h3>Environment Properties</h3>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.OSVersion)</dt>
+                <dd>@Environment.OSVersion</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.Version)</dt>
+                <dd>@Environment.Version</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.CurrentDirectory)</dt>
+                <dd>@Environment.CurrentDirectory</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.ProcessorCount)</dt>
+                <dd>@Environment.ProcessorCount</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.CommandLine)</dt>
+                <dd>@Environment.CommandLine</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.CurrentManagedThreadId)</dt>
+                <dd>@Environment.CurrentManagedThreadId</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.Is64BitOperatingSystem)</dt>
+                <dd>@Environment.Is64BitOperatingSystem</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.Is64BitProcess)</dt>
+                <dd>@Environment.Is64BitProcess</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.MachineName)</dt>
+                <dd>@Environment.MachineName</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.StackTrace)</dt>
+                <dd>@Environment.StackTrace</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.SystemDirectory)</dt>
+                <dd>@Environment.SystemDirectory</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.SystemPageSize)</dt>
+                <dd>@Environment.SystemPageSize</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.TickCount)</dt>
+                <dd>@Environment.TickCount</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.UserDomainName)</dt>
+                <dd>@Environment.UserDomainName</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.UserInteractive)</dt>
+                <dd>@Environment.UserInteractive</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.UserName)</dt>
+                <dd>@Environment.UserName</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.WorkingSet)</dt>
+                <dd>@Environment.WorkingSet</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Environment.HasShutdownStarted)</dt>
+                <dd>@Environment.HasShutdownStarted</dd>
+            </dl>
+        }
+    </div>
+
+    <div>
+        @if (!Request.IsAuthenticated)
+        {
+            <h3>Request Properties</h3>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.ApplicationPath)</dt>
+                <dd>@Request.ApplicationPath</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.Browser)</dt>
+                <dd>@Request.Browser.Type</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.FilePath)</dt>
+                <dd>@Request.FilePath</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.LogonUserIdentity)</dt>
+                <dd>@Request.LogonUserIdentity.User</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.IsAuthenticated)</dt>
+                <dd>@Request.IsAuthenticated</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.IsLocal)</dt>
+                <dd>@Request.IsLocal</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.RawUrl)</dt>
+                <dd>@Request.RawUrl</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.UserAgent)</dt>
+                <dd>@Request.UserAgent</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.UserHostAddress)</dt>
+                <dd>@Request.UserHostAddress</dd>
+            </dl>
+        }
+    </div>
+
+    <h2>Server Variables</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Variable Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (string key in serverVariables.AllKeys)
+            {
+                string value = serverVariables[key];
+                <tr>
+                    <td>@key</td>
+                    <td>@value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

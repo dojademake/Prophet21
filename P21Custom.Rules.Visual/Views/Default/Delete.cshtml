@@ -1,0 +1,34 @@
+@model List<System.Diagnostics.FileVersionInfo>
+
+<h2>DLL Versions</h2>
+
+<table>
+    <tr>
+        <th>File Name</th>
+        <th>Version</th>
+    </tr>
+    @foreach (System.Diagnostics.FileVersionInfo dll in Model)
+    {
+        <tr>
+            @if (string.IsNullOrEmpty(dll.OriginalFilename))
+            {
+                <td colspan="2">@Html.DisplayFor(m => dll.FileName)</td>
+            }
+            else
+            {
+                <td>@Html.DisplayFor(m => dll.OriginalFilename)</td>
+                <td>@Html.DisplayFor(m => dll.ProductVersion)</td>
+            }
+        </tr>
+    }
+</table>
+
+<h2>Subdirectories</h2>
+
+<ul>
+    @foreach (var subdirectory in ViewBag.Subdirectories)
+    {
+        //TODO: create a link to show the files within the subdirectory
+        <li>@subdirectory</li>
+    }
+</ul>

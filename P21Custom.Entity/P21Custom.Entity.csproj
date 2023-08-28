@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CAF7E77F-6C60-4C16-B52D-A04D5F3FFCC4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>P21.Entity</RootNamespace>
+    <AssemblyName>P21.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="P21.Extensions">
+      <HintPath>..\lib\P21.Extensions.21.2.4483\P21.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Database\business_rule.cs" />
+    <Compile Include="Database\business_rule_data_element.cs" />
+    <Compile Include="Database\business_rule_event.cs" />
+    <Compile Include="Database\business_rule_event_class.cs" />
+    <Compile Include="Database\business_rule_event_extd_info.cs" />
+    <Compile Include="Database\business_rule_event_key.cs" />
+    <Compile Include="Database\business_rule_log.cs" />
+    <Compile Include="Database\business_rule_rmb.cs" />
+    <Compile Include="Database\business_rule_x_roles.cs" />
+    <Compile Include="Database\business_rule_x_users.cs" />
+    <Compile Include="Database\code_group_p21.cs" />
+    <Compile Include="Database\code_p21.cs" />
+    <Compile Include="Database\code_x_code_group_p21.cs" />
+    <Compile Include="Database\code_x_code_p21.cs" />
+    <Compile Include="Database\grow_metric.cs" />
+    <Compile Include="Database\P21DbContext.cs" />
+    <Compile Include="Database\ribbon.cs" />
+    <Compile Include="Database\ribbon_metric.cs" />
+    <Compile Include="Database\ribbon_metric_x_roles.cs" />
+    <Compile Include="Database\ribbon_metric_x_users.cs" />
+    <Compile Include="Database\ribbon_tab.cs" />
+    <Compile Include="Database\ribbon_tab_group.cs" />
+    <Compile Include="Database\ribbon_tab_group_x_ribbon_tab.cs" />
+    <Compile Include="Database\ribbon_tab_x_ribbon.cs" />
+    <Compile Include="Database\ribbon_tool.cs" />
+    <Compile Include="Database\ribbon_tool_x_ribbon_tab_group.cs" />
+    <Compile Include="Database\role.cs" />
+    <Compile Include="Database\system_alerts.cs" />
+    <Compile Include="Database\system_parameters.cs" />
+    <Compile Include="Database\system_setting.cs" />
+    <Compile Include="Database\sys_params_p21.cs" />
+    <Compile Include="Database\user.cs" />
+    <Compile Include="Services\BusinessRuleService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.2.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
