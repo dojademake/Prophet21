@@ -134,25 +134,19 @@ namespace P21.Rules.Visual.Controllers
                 {
                     FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(dllFile);
                     versions.Add(fileVersionInfo);
-
-                    // Display properties
-                    Console.WriteLine("File: " + dllFile);
-                    Console.WriteLine("Product Name: " + fileVersionInfo.ProductName);
-                    Console.WriteLine("Product Version: " + fileVersionInfo.ProductVersion);
-                    Console.WriteLine("File Version: " + fileVersionInfo.FileVersion);
-                    Console.WriteLine("Comments: " + fileVersionInfo.Comments);
-                    Console.WriteLine("Company Name: " + fileVersionInfo.CompanyName);
-                    Console.WriteLine("Original Filename: " + fileVersionInfo.OriginalFilename);
-                    Console.WriteLine("------------------------------------");
                 }
                 catch (Exception ex)
                 {
-                    // Handle exceptions if necessary
-                    Console.WriteLine("Error reading file: " + dllFile);
-                    Console.WriteLine("Error details: " + ex.Message);
-                    Console.WriteLine("------------------------------------");
+                    //TODO: log message
+                    versions.Add(FileVersionInfo.GetVersionInfo(ex.Message));
                 }
             }
+
+            string rootPath = Server.MapPath("~"); // Map the root path of the application
+            string[] subdirectories = Directory.GetDirectories(binPath);
+
+            ViewBag.Subdirectories = subdirectories; // Pass the subdirectories to the view
+
 
             return View(versions);
         }

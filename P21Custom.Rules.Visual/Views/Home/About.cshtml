@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "About";
+    var serverVariables = HttpContext.Current.Request.ServerVariables;
 }
+
 <main aria-labelledby="title">
     <h2 id="title">@ViewBag.Title.</h2>
     <h3>@ViewBag.Message</h3>
@@ -23,6 +25,16 @@
 
             <dt>Version</dt>
             <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version</dd>
+
+            <dt>Directories</dt>
+            <dd>
+                @*@Html.ActionLink("Areas", "Delete", "Default", new { id = "Areas,html" }, new { @class = "btn btn-outline" })*@
+                @Html.ActionLink("App_Data", "Delete", "Default", new { id = "App_Data,xml" }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("DLL", "Delete", "Default", new { id = "bin,dll" }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Content", "Delete", "Default", new { id = "Content,css" }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Scripts", "Delete", "Default", new { id = "Scripts,js" }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Views", "Delete", "Default", new { id = "Views,cshtml" }, new { @class = "btn btn-danger" })
+            </dd>
         </dl>
     </p>
 
@@ -106,4 +118,68 @@
         }
     </div>
 
+    <div>
+        @if (!Request.IsAuthenticated)
+        {
+            <h3>Request Properties</h3>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.ApplicationPath)</dt>
+                <dd>@Request.ApplicationPath</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.Browser)</dt>
+                <dd>@Request.Browser.Type</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.FilePath)</dt>
+                <dd>@Request.FilePath</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.LogonUserIdentity)</dt>
+                <dd>@Request.LogonUserIdentity.User</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.IsAuthenticated)</dt>
+                <dd>@Request.IsAuthenticated</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.IsLocal)</dt>
+                <dd>@Request.IsLocal</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.RawUrl)</dt>
+                <dd>@Request.RawUrl</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.UserAgent)</dt>
+                <dd>@Request.UserAgent</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>@nameof(Request.UserHostAddress)</dt>
+                <dd>@Request.UserHostAddress</dd>
+            </dl>
+        }
+    </div>
+
+    <h2>Server Variables</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Variable Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (string key in serverVariables.AllKeys)
+            {
+                string value = serverVariables[key];
+                <tr>
+                    <td>@key</td>
+                    <td>@value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </main>

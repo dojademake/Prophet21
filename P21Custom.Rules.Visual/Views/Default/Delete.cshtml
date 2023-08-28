@@ -22,3 +22,13 @@
         </tr>
     }
 </table>
+
+<h2>Subdirectories</h2>
+
+<ul>
+    @foreach (var subdirectory in ViewBag.Subdirectories)
+    {
+        //TODO: create a link to show the files within the subdirectory
+        <li>@subdirectory</li>
+    }
+</ul>
