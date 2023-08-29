@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace P21.Rules.Visual.Utilities
+namespace P21Custom.Rules.Visual.Utilities
 {
     public class FileUtility
     {

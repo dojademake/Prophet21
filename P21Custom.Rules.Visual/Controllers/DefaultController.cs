@@ -2,7 +2,7 @@
 using P21Custom.Entity.Services;
 using P21.Extensions.BusinessRule;
 using P21.Extensions.Web;
-using P21.Rules.Visual.Utilities;
+using P21Custom.Rules.Visual.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +15,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace P21.Rules.Visual.Controllers
+namespace P21Custom.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
@@ -58,7 +58,7 @@ namespace P21.Rules.Visual.Controllers
                 if (content != null)
                 {
                     SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
-                    Rule.Initialize(content, new Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+                    Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
                 }
                 else
                 {

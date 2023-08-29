@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace P21.Rules.Visual.Controllers
+namespace P21Custom.Rules.Visual.Controllers
 {
     public class HomeController : Controller
     {
@@ -15,14 +15,14 @@ namespace P21.Rules.Visual.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Web hosting and protocol values listed below.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Resources and documentation.";
 
             return View();
         }
