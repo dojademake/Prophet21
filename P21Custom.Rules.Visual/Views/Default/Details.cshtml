@@ -209,6 +209,12 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
+<p>
+    Use @Html.ActionLink("this", "Index", "Initialize", new { ruleController = "Default", ruleAction = "Details" }, new { @class = "text-primary" })
+    <a href="~/Default/Details" class="text-secondary">area</a>
+    to provide additional information.
+</p>
+
 @section Scripts {
 
     <script>
