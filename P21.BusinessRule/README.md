@@ -4,7 +4,7 @@
 
 This folder contains code for extending Prophet 21 via DynaChange&trade; Business Rules.
 
-## P21.BusinessRule.Model
+## P21.BusinessRule
 
 A package project for custom rules to inherit for simplifying configuration and logging.
 
