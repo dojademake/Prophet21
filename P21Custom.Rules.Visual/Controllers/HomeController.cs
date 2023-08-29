@@ -15,14 +15,14 @@ namespace P21.Rules.Visual.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Web hosting and protocol values listed below.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Resources and documentation.";
 
             return View();
         }
