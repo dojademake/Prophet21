@@ -1,6 +1,6 @@
 # DynaChange&trade; Business Rule focus
 
-![DynaChange&trade; Rules](https://github.com/Epicor/Prophet21/tree/master/Extensibility/P21Custom.Extensions/lib/assets)
+![DynaChange&trade; Rules](https://github.com/Epicor/Prophet21/tree/master/Extensibility/P21.Extensions/lib/assets)
 
 This folder contains code for extending Prophet 21 via DynaChange&trade; Business Rules.
 
@@ -14,7 +14,7 @@ Inherit this base class for typical single or multi-row examining and manipulati
 
 ## BusinessRule.Examples
 
-Sample files inheriting the base rule class modeled after the https://github.com/Epicor/Prophet21/tree/master/Extensibility/P21Custom.Extensions/P21Custom.Extensions.Examples/General repository.
+Sample files inheriting the base rule class modeled after the https://github.com/Epicor/Prophet21/tree/master/Extensibility/P21.Extensions/P21.Extensions.Examples/General repository.
 
 ### `ValidDatetime.cs`
 

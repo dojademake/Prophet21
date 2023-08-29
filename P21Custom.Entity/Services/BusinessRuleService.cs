@@ -43,8 +43,11 @@ namespace P21Custom.Entity.Services
                         {
                             p21Db = new P21DbContext("name=P21ConnectionString");
                         }
+                        else
+                        {
+                            p21Db = new P21DbContext("name=P21ConnectionString");
+                        }
                     }
-                }
                 if (p21Db == null)
                 {
                     p21Db = new P21DbContext("name=RemoteConnectionString");

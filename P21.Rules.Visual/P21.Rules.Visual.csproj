@@ -224,13 +224,13 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\P21.BusinessRule\P21.BusinessRule.csproj">
+    <ProjectReference Include="..\P21Custom.Extensions\P21Custom.Extensions.csproj">
       <Project>{2838fd01-df39-46df-a5c8-3915adb59c64}</Project>
-      <Name>P21.BusinessRule</Name>
+      <Name>P21Custom.Extensions.BusinessRule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\P21.Entity\P21.Entity.csproj">
+    <ProjectReference Include="..\P21Custom.Entity\P21Custom.Entity.csproj">
       <Project>{CAF7E77F-6C60-4C16-B52D-A04D5F3FFCC4}</Project>
-      <Name>P21.Entity</Name>
+      <Name>P21Custom.Extensions.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
