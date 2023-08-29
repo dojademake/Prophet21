@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace P21.Rules.Visual.Controllers
+namespace P21Custom.Rules.Visual.Controllers
 {
     public class HomeController : Controller
     {

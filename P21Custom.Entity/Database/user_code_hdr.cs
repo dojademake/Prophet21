@@ -1,4 +1,4 @@
-namespace P21.Entity
+namespace P21Custom.Entity
 {
     using System;
     using System.Collections.Generic;
