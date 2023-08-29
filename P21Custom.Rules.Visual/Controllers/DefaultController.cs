@@ -1,6 +1,4 @@
-﻿using P21Custom.Entity.Database;
-using P21Custom.Entity.Services;
-using P21.Extensions.BusinessRule;
+﻿using P21Custom.Entity.Services;
 using P21.Extensions.Web;
 using P21Custom.Rules.Visual.Utilities;
 using System;
