@@ -348,6 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Web Visual Rules production settings
 /NuGet.Config
 /P21Custom.Entity/App.Release.Config
 /P21Custom.Rules.Visual/Web.Release.config
