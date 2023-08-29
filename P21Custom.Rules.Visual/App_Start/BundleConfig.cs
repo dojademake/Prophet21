@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace P21.Rules.Visual
+namespace P21Custom.Rules.Visual
 {
     public class BundleConfig
     {

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace P21.Rules.Visual
+namespace P21Custom.Rules.Visual
 {
     public class RouteConfig
     {
