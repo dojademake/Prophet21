@@ -8,9 +8,9 @@ using System.Security;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("P21Custom.Extensions")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Custom classes to inherit for simplifying configuration and logging based at the https://github.com/dojademake/Prophet21 repository.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("GNU General Public License (GPL)")]
 [assembly: AssemblyProduct("P21Custom.Extensions")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
@@ -35,6 +35,6 @@ using System.Security;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AllowPartiallyTrustedCallers]
-[assembly: AssemblyVersion("22.1.0.0")]
-[assembly: AssemblyFileVersion("22.1.0.0")]
+[assembly: AssemblyVersion("21.2.0.0")]
+[assembly: AssemblyFileVersion("21.2.0.0")]
 [assembly: NeutralResourcesLanguage("en-US")]

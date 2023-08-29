@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("P21Custom.Rules.Visual")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Web Visual Rule template for deploying DynaChange™️ Rules to a P21 environment.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("GNU General Public License (GPL)")]
 [assembly: AssemblyProduct("P21Custom.Rules.Visual")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("21.2.0.0")]
+[assembly: AssemblyFileVersion("21.2.0.0")]
