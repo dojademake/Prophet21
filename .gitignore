@@ -355,3 +355,4 @@ MigrationBackup/
 /P21Custom.Rules.Visual/Web.Release.config
 P21.Extensions.dll
 Epicor.P21.Popup.Model.dll
+lib/assets/
