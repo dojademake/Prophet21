@@ -23,11 +23,19 @@ $remoteEnvironmentPath = "${remoteRootPath}${environmentDirectory}/"
 $remoteBinPath = "${remoteEnvironmentPath}bin/"
 $localPath = "C:\Repos\Prophet21\P21Custom.Rules.Visual\bin\app.publish\*" # Replace with the actual environment
 
+# Upload the app_offline.html file to the root directory
+$localAppOfflinePath = "C:\Path\To\Your\app_offline.html" # Specify the path to your app_offline.html file
+$remoteAppOfflinePath = "${remoteEnvironmentPath}app_offline.html"
+$session.PutFiles($localAppOfflinePath, $remoteAppOfflinePath).Check()
+
 # Delete remote files in the bin directory
 $session.RemoveFiles("${remoteBinPath}*")
 
 # Upload local files to the remote directory
 $session.PutFiles($localPath, $remoteEnvironmentPath).Check()
+
+# Remove the app_offline.html file
+$session.RemoveFiles($remoteAppOfflinePath)
 
 # Disconnect from the SFTP server
 $session.Dispose()
