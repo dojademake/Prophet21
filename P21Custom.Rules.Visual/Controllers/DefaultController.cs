@@ -25,6 +25,25 @@ namespace P21Custom.Rules.Visual.Controllers
             //service.RequestData = Request;
         }
 
+        public ActionResult About()
+        {
+            ViewBag.Message = "Web hosting and protocol values listed below.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Resources and documentation.";
+
+            return View();
+        }
+
+        public ActionResult Home()
+        {
+            return View();
+        }
+
         // GET: Default
         public ActionResult Index()
         {
