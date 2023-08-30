@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace P21Custom.Extensions.BusinessRule
+namespace P21Custom.Extensions
 {
 	public abstract class BaseRule : Rule, IDisposable
 	{
