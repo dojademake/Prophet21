@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "About";
     var serverVariables = HttpContext.Current.Request.ServerVariables;
+    string targetFrameworkVersion = System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion;
 }
 
 <main aria-labelledby="title">
@@ -20,6 +21,9 @@
 
             <dt>Version</dt>
             <dd>@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version</dd>
+
+            <dt>ImageRuntimeVersion</dt>
+            <dd>@targetFrameworkVersion</dd>
 
             <dt>Directories</dt>
             <dd>

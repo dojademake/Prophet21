@@ -14,8 +14,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>P21Custom.Rules.Visual</RootNamespace>
-    <AssemblyName>P21Custom.Rules.Visual</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AssemblyName>P21.Rules.Visual</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -61,7 +61,7 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="P21.Extensions">
-      <HintPath>..\lib\P21.Extensions.21.2.4483\P21.Extensions.dll</HintPath>
+      <HintPath>..\lib\P21.Extensions.20.1.4018\P21.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -222,10 +222,6 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\P21Custom.Extensions\P21Custom.Extensions.csproj">
-      <Project>{2838fd01-df39-46df-a5c8-3915adb59c64}</Project>
-      <Name>P21Custom.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\P21Custom.Entity\P21Custom.Entity.csproj">
       <Project>{CAF7E77F-6C60-4C16-B52D-A04D5F3FFCC4}</Project>
       <Name>P21Custom.Entity</Name>
