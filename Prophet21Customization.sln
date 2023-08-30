@@ -1,11 +1,9 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34018.315
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33927.289
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P21Custom.Extensions", "P21Custom.Extensions\P21Custom.Extensions.csproj", "{2838FD01-DF39-46DF-A5C8-3915ADB59C64}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P21Custom.Rules.Visual", "P21Custom.Rules.Visual\P21Custom.Rules.Visual.csproj", "{F8EA80F7-8875-4F3D-9128-48826629472D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P21.Rules.Visual", "P21.Rules.Visual\P21.Rules.Visual.csproj", "{F8EA80F7-8875-4F3D-9128-48826629472D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P21Custom.Entity", "P21Custom.Entity\P21Custom.Entity.csproj", "{CAF7E77F-6C60-4C16-B52D-A04D5F3FFCC4}"
 EndProject
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2838FD01-DF39-46DF-A5C8-3915ADB59C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2838FD01-DF39-46DF-A5C8-3915ADB59C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2838FD01-DF39-46DF-A5C8-3915ADB59C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2838FD01-DF39-46DF-A5C8-3915ADB59C64}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8EA80F7-8875-4F3D-9128-48826629472D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8EA80F7-8875-4F3D-9128-48826629472D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8EA80F7-8875-4F3D-9128-48826629472D}.Release|Any CPU.ActiveCfg = Release|Any CPU

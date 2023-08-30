@@ -85,30 +85,30 @@ index 7c8f2f7..19be532 100644
 +[assembly: AssemblyVersion("21.2.0.0")]
 +[assembly: AssemblyFileVersion("21.2.0.0")]
  [assembly: NeutralResourcesLanguage("en-US")]
-diff --git a/P21Custom.Rules.Visual/Controllers/DefaultController.cs b/P21Custom.Rules.Visual/Controllers/DefaultController.cs
+diff --git a/P21.Rules.Visual/Controllers/DefaultController.cs b/P21.Rules.Visual/Controllers/DefaultController.cs
 index ff6ca18..98b0b8b 100644
---- a/P21Custom.Rules.Visual/Controllers/DefaultController.cs
-+++ b/P21Custom.Rules.Visual/Controllers/DefaultController.cs
+--- a/P21.Rules.Visual/Controllers/DefaultController.cs
++++ b/P21.Rules.Visual/Controllers/DefaultController.cs
 @@ -1,6 +1,4 @@
 -﻿using P21Custom.Entity.Database;
 -using P21Custom.Entity.Services;
 -using P21.Extensions.BusinessRule;
 +﻿using P21Custom.Entity.Services;
  using P21.Extensions.Web;
- using P21Custom.Rules.Visual.Utilities;
+ using P21.Rules.Visual.Utilities;
  using System;
-diff --git a/P21Custom.Rules.Visual/P21Custom.Rules.Visual.csproj b/P21Custom.Rules.Visual/P21Custom.Rules.Visual.csproj
+diff --git a/P21.Rules.Visual/P21.Rules.Visual.csproj b/P21.Rules.Visual/P21.Rules.Visual.csproj
 index 1353853..d36b639 100644
---- a/P21Custom.Rules.Visual/P21Custom.Rules.Visual.csproj
-+++ b/P21Custom.Rules.Visual/P21Custom.Rules.Visual.csproj
+--- a/P21.Rules.Visual/P21.Rules.Visual.csproj
++++ b/P21.Rules.Visual/P21.Rules.Visual.csproj
 @@ -13,8 +13,8 @@
      <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
      <OutputType>Library</OutputType>
      <AppDesignerFolder>Properties</AppDesignerFolder>
 -    <RootNamespace>P21.Rules.Visual</RootNamespace>
 -    <AssemblyName>P21.Rules.Visual</AssemblyName>
-+    <RootNamespace>P21Custom.Rules.Visual</RootNamespace>
-+    <AssemblyName>P21Custom.Rules.Visual</AssemblyName>
++    <RootNamespace>P21.Rules.Visual</RootNamespace>
++    <AssemblyName>P21.Rules.Visual</AssemblyName>
      <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
      <MvcBuildViews>false</MvcBuildViews>
      <UseIISExpress>true</UseIISExpress>
@@ -120,20 +120,20 @@ index 1353853..d36b639 100644
    </ItemGroup>
    <ItemGroup>
      <Folder Include="Models\" />
-diff --git a/P21Custom.Rules.Visual/Properties/AssemblyInfo.cs b/P21Custom.Rules.Visual/Properties/AssemblyInfo.cs
+diff --git a/P21.Rules.Visual/Properties/AssemblyInfo.cs b/P21.Rules.Visual/Properties/AssemblyInfo.cs
 index 5d5816d..3ce966f 100644
---- a/P21Custom.Rules.Visual/Properties/AssemblyInfo.cs
-+++ b/P21Custom.Rules.Visual/Properties/AssemblyInfo.cs
+--- a/P21.Rules.Visual/Properties/AssemblyInfo.cs
++++ b/P21.Rules.Visual/Properties/AssemblyInfo.cs
 @@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
  // set of attributes. Change these attribute values to modify the information
  // associated with an assembly.
- [assembly: AssemblyTitle("P21Custom.Rules.Visual")]
+ [assembly: AssemblyTitle("P21.Rules.Visual")]
 -[assembly: AssemblyDescription("")]
 +[assembly: AssemblyDescription("A Web Visual Rule template for deploying DynaChange™️ Rules to a P21 environment.")]
  [assembly: AssemblyConfiguration("")]
 -[assembly: AssemblyCompany("")]
 +[assembly: AssemblyCompany("GNU General Public License (GPL)")]
- [assembly: AssemblyProduct("P21Custom.Rules.Visual")]
+ [assembly: AssemblyProduct("P21.Rules.Visual")]
  [assembly: AssemblyCopyright("Copyright ©  2023")]
  [assembly: AssemblyTrademark("")]
 @@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
@@ -144,10 +144,10 @@ index 5d5816d..3ce966f 100644
 -[assembly: AssemblyFileVersion("1.0.0.1")]
 +[assembly: AssemblyVersion("21.2.0.0")]
 +[assembly: AssemblyFileVersion("21.2.0.0")]
-diff --git a/P21Custom.Rules.Visual/Views/Default/Delete.cshtml b/P21Custom.Rules.Visual/Views/Default/Delete.cshtml
+diff --git a/P21.Rules.Visual/Views/Default/Delete.cshtml b/P21.Rules.Visual/Views/Default/Delete.cshtml
 index fa6ea3f..7b99ad6 100644
---- a/P21Custom.Rules.Visual/Views/Default/Delete.cshtml
-+++ b/P21Custom.Rules.Visual/Views/Default/Delete.cshtml
+--- a/P21.Rules.Visual/Views/Default/Delete.cshtml
++++ b/P21.Rules.Visual/Views/Default/Delete.cshtml
 @@ -2,7 +2,7 @@
  
  <h2>DLL Versions</h2>
