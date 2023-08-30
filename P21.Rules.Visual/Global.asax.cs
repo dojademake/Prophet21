@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace P21Custom.Rules.Visual
+namespace P21.Rules.Visual
 {
     public class MvcApplication : System.Web.HttpApplication
     {

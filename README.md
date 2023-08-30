@@ -9,7 +9,7 @@ Entity Framework 6 entities and services for interacting with a Prophet 21 datab
 
 Custom classes to inherit for simplifying configuration and logging within DynaChange&trade; Rules.
 
-##  P21Custom.Rules.Visual
+##  P21.Rules.Visual
 
 A Web Visual Rule template for deploying DynaChange&trade; Rules to a P21 environment.
 

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("P21Custom.Rules.Visual")]
+[assembly: AssemblyTitle("P21.Rules.Visual")]
 [assembly: AssemblyDescription("A Web Visual Rule template for deploying DynaChange™️ Rules to a P21 environment.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GNU General Public License (GPL)")]
-[assembly: AssemblyProduct("P21Custom.Rules.Visual")]
+[assembly: AssemblyProduct("P21.Rules.Visual")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

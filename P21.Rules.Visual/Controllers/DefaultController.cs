@@ -1,6 +1,6 @@
 ﻿using P21Custom.Entity.Services;
 using P21.Extensions.Web;
-using P21Custom.Rules.Visual.Utilities;
+using P21.Rules.Visual.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,7 +13,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace P21Custom.Rules.Visual.Controllers
+namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
