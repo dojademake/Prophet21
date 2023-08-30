@@ -222,6 +222,7 @@
     <Content Include="Views\Default\About.cshtml" />
     <Content Include="Views\Default\Contact.cshtml" />
     <Content Include="Views\Default\Home.cshtml" />
+    <Content Include="Views\Default\Edit.cshtml" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

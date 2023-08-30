@@ -116,7 +116,7 @@ namespace P21.Rules.Visual.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Initialize", new { ruleController = collection.GetKey(0), ruleAction = collection.GetValue("ruleAction") });
             }
             catch
             {
