@@ -32,11 +32,19 @@ namespace P21.Rules.Visual.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact(string id)
         {
-            ViewBag.Message = "Resources and documentation.";
 
-            return View();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                ViewBag.Message = "Resources and documentation.";
+                return View("GetStarted");
+            }
+            else
+            {
+                ViewBag.Message = "Corporate Office";
+                return View();
+            }
         }
 
         public ActionResult Home()
