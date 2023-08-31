@@ -18,7 +18,7 @@ $session.Open($sessionOptions)
 
 # Set paths
 $environmentDirectory = "Play"
-$remoteRootPath = "/CompanyName/Shared/WebVisualRules/" # Specify your companies SFTP folder for the WVR virtual directory
+$remoteRootPath = "/COMPANYNAME/Shared/WebVisualRules/" # Specify your companies SFTP folder for the WVR virtual directory
 $remoteEnvironmentPath = "${remoteRootPath}${environmentDirectory}/"
 $remoteBinPath = "${remoteEnvironmentPath}bin/"
 $localPath = "C:\Repos\Prophet21\P21Custom.Rules.Visual\bin\app.publish\*" # Replace with the actual environment

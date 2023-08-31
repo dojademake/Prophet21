@@ -1,23 +1,30 @@
-# Define your credentials and server details
-$sftpServer = "usafileupload.epicorsaas.com"
-$sftpPort = 47506
-$sftpUser = "user.name"
-$sftpPassword = "#####"
-$securePassword = ConvertTo-SecureString $sftpPassword -AsPlainText -Force
-$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $sftpUser, $securePassword
+# Get User Inputs
+$sftpUser = Read-Host "Enter SFTP Username"
+$sftpPassword = Read-Host "Enter SFTP Password" -AsSecureString
+$localPath = Read-Host "Enter Local Path (Press Enter for default 'app.publish' path)" 
+if ([string]::IsNullOrEmpty($localPath)) { $localPath = "C:\Repos\GitHub\Prophet21\P21.Rules.Visual\bin\app.publish\*" }
 
-# Establish an SFTP connection
-$session = New-SFTPSession -HostName $sftpServer -Port $sftpPort -Credential $credential
+$remotePath = Read-Host "Enter Remote Path (Press Enter for default 'WebVisualRules' path)"
+if ([string]::IsNullOrEmpty($remotePath)) { $remotePath = "/[COMPANYNAME]/Shared/WebVisualRules/Play" }
 
-# Set the local and remote paths
-$localPath = "D:\Repos\GitHub\Prophet21\P21.Rules.Visual\bin\app.publish\*"
-$remotePath = "/COMPANYNAME/Shared/WebVisualRules/Play"
+# Create the SFTP Session
+$session = New-SFTPSession -HostName $sftpServer -Port $sftpPort -Credential (New-Object PSCredential ($sftpUser, $sftpPassword))
 
-# Upload the files using Set-SFTPItem
-Get-ChildItem $localPath | ForEach-Object {
+# Loop through each local file
+Get-ChildItem $localPath -File | ForEach-Object {
     $localFilePath = $_.FullName
-    Set-SFTPItem -SessionId $session.SessionId -Path $localFilePath -Destination $remotePath -Force
-}
+    $localFileName = $_.Name
 
-# Close the SFTP session
-Remove-SFTPSession -SessionId $session.SessionId
+    $remoteFilePath = Join-Path $remotePath $localFileName # -Replace '\\','/'
+
+    try {
+        $remoteFile = Get-SFTPItem -SessionId $session.SessionId -Path $remoteFilePath -ErrorAction SilentlyContinue
+    } catch {
+        Write-Host "Remote file $remoteFilePath does not exist."
+    }
+
+    if ($null -eq $remoteFile -or $_.LastWriteTime -gt $remoteFile.LastWriteTime.ToLocalTime()) {
+        Write-Host "Uploading $localFilePath to $remoteFilePath"
+        Set-SFTPItem -SessionId $session.SessionId -LocalPath $localFilePath -RemotePath $remoteFilePath -Force
+    }
+}
