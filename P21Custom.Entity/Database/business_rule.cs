@@ -109,5 +109,9 @@ namespace P21Custom.Entity.Database
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<business_rule_x_users> business_rule_x_users { get; set; }
+
+        [ForeignKey("rule_type_cd")] 
+        public virtual code_p21 rule_type { get; set; }
+
     }
 }
