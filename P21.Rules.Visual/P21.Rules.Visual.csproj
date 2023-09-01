@@ -206,6 +206,9 @@
     <Content Include="Content\bootstrap.rtl.css.map" />
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Areas\SampleRule1\Views\web.config" />
+    <Content Include="Areas\SampleRule1\Views\SampleRule1\FormView.cshtml" />
+    <Content Include="Areas\SampleRule1\Views\SampleRule1\GridView.cshtml" />
+    <Content Include="Areas\SampleRule1\Views\SampleRule1\RuleView.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\DeploymentProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
@@ -244,7 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\SampleRule1\Data\" />
-    <Folder Include="Areas\SampleRule1\Views\SampleRule1\" />
     <Folder Include="Areas\SampleRule1\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
