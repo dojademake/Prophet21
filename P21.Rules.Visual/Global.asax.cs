@@ -58,5 +58,13 @@ namespace P21.Rules.Visual
         //    // Your custom logic here. Set a breakpoint on the next line to inspect every incoming request.
         //    Debug.WriteLine("End Request triggered for " + HttpContext.Current.Request.Url.ToString());
         //}
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            // Resolve logger and log exception
+            var logger = DependencyResolver.Current.GetService<IRuleLogger>();
+            logger?.LogError(exception.ToString());
+        }
     }
 }
