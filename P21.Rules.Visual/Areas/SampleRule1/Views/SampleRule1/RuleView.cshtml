@@ -8,6 +8,12 @@
 <h2>RuleView</h2>
 
 <div>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("FormView", "SampleRule1")'">Form View</button>
+    <button style="padding-left:10px" type="button" class="btn btn-primary" onclick="location.href='@Url.Action("GridView", "SampleRule1")'">Grid View</button>
+    <hr />
+</div>
+
+<div>
     @if (Model != null)
     {
         if (Model.RuleResult != null)
@@ -225,13 +231,13 @@
                     @Html.DisplayFor(model => model.Session.ClientPlatform)
                 </dd>
 
-                <dt>
+                @*<dt>
                     @Html.DisplayNameFor(model => model.Session.WorkstationID)
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Session.WorkstationID)
-                </dd>
+                </dd>*@
             </dl>
 
         }
