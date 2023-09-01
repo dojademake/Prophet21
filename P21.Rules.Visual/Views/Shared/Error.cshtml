@@ -1,13 +1,53 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@using P21Custom.Extensions.Models
+@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    //var logger = new P21.Rules.Visual.Utilities.RuleLogger();
+    //logger.SetLoggerName("Internal Error Page");
+
+    string errorMessage = "Unknown";
+    if (Model != null)
+    {
+        var exception = Model.Exception;
+        errorMessage = String.Format("Controller {1} threw an error of type {0} in the {2} action.  " + Environment.NewLine +
+            "Exception message: {3} " + Environment.NewLine +
+            "{4}",
+            exception.GetType(), Model.ControllerName, Model.ActionName, exception.Message, exception.ToString());
+
+        //logger.LogError("Exception {0} thrown in controller {1} action {2}. Exception message: {3}",
+        //    exception.GetType(), Model.ControllerName, Model.ActionName, exception.Message);
+
+        //// if we are catching our Domain Exception, we want user to show the message.
+        //var domainException = exception as DomainException;
+
+        ////var errorMessage = String.Empty;
+        //if (domainException != null)
+        //{
+        //    errorMessage = domainException.Message;
+        //}
+    }
+    else
+    {
+        errorMessage = "HandleErrorInfo is null";
+    }
+}
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_VisualRuleLayout.cshtml";
+}
+
+<div style="padding: 5px">
+    <div style="text-align: center">
+        <div class="errorTitle">Oops.. </div>
+        <h4>We encountered an error while trying to load the (@Request.Url) page.</h4>
+        <hr />
+
+        @if (!String.IsNullOrEmpty(errorMessage))
+        {
+            <div class="well" style="font-size:0.8em;">
+                Error Message: <pre style="text-align:left;">@errorMessage</pre>
+            </div>
+        }
+    </div>
+</div>

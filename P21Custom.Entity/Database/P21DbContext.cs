@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 
 namespace P21Custom.Entity.Database
@@ -145,6 +146,12 @@ namespace P21Custom.Entity.Database
             modelBuilder.Entity<business_rule>()
                 .HasMany(e => e.business_rule_x_users)
                 .WithRequired(e => e.business_rule)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<business_rule>()
+                .HasRequired(br => br.rule_type)
+                .WithMany(cp => cp.business_rules)
+                .HasForeignKey(br => br.rule_type_cd)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<business_rule_data_element>()
@@ -373,6 +380,12 @@ namespace P21Custom.Entity.Database
             modelBuilder.Entity<code_group_p21>()
                 .Property(e => e.last_maintained_by)
                 .IsUnicode(false);
+
+            // Additional Configuration for code_p21 to specify that code_no is a unique constraint but not a primary key
+            modelBuilder.Entity<code_p21>()
+                .Property(e => e.code_no)
+                .HasColumnAnnotation("Index",
+                    new IndexAnnotation(new IndexAttribute("UIX_code_no") { IsUnique = true }));
 
             modelBuilder.Entity<code_p21>()
                 .Property(e => e.language_id)

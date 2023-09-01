@@ -11,7 +11,7 @@ using System.Web;
 
 namespace P21Custom.Entity.Services
 {
-    public class BusinessRuleService
+    public class BusinessRuleService //:ILoggingService
     {
         private P21DbContext p21Db;
 
