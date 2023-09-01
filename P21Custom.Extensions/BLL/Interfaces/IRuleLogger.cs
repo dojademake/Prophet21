@@ -5,7 +5,6 @@ namespace P21Custom.Extensions.BusinessRule.BLL
 {
     public interface IRuleLogger
     {
-        //Type DeclaringType { get; }
         bool Initialized { get; set; }
         //BaseRule RuleToLog { get; }
         LogLevel Threshold { get; }

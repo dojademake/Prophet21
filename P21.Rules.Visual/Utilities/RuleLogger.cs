@@ -7,24 +7,12 @@ namespace P21.Rules.Visual.Utilities
 {
     public class RuleLogger : IRuleLogger
     {
-        //private readonly Type _declaringType;
-        //public Type DeclaringType => _declaringType;
-
         //private readonly BaseRule _ruleToLog;
         private readonly LogLevel _theshold;
         private bool _isInitialized;
 
         public RuleLogger()
         { }
-
-        //public RuleLogger(BaseRule ruleToLog)
-        //{
-        //    //_declaringType = type;
-        //    if (ruleToLog != null)
-        //    {
-        //        _theshold = ruleToLog.LogSeverity;
-        //    }
-        //}
 
         public bool Initialized
         {
@@ -58,6 +46,10 @@ namespace P21.Rules.Visual.Utilities
             //TODO: determine log level and store from web.config
             Initialized = true;
             return this;
+        }
+        public void SetLoggerName(string nameOfLog)
+        {
+
         }
 
         private void LogMessage(LogLevel level, string message)

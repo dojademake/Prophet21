@@ -1,4 +1,5 @@
-﻿using P21Custom.Extensions.BusinessRule.BLL;
+﻿using Microsoft.Ajax.Utilities;
+using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,19 +25,29 @@ namespace P21.Rules.Visual
             try
             {
                 lastException = Server.GetLastError();
-                if (lastException != null)
+
+                if (logger != null)
                 {
-                    lastError = lastException.ToString();
+                    lastError = $"The {lastException.Message} error logged to the {logger.GetType().Name} class.";
                 }
                 else
                 {
-                    if (Request.QueryString["controller"] != null)
+                    //lastError = "logger is null";
+                    //return;
+                    if (lastException != null)
                     {
-                        lastError = $"Error reported by: {Request.QueryString["controller"]} - {Request.QueryString["action"]}";
+                        lastError = lastException.ToString();
                     }
                     else
                     {
-                        lastError = "Something went wrong...";
+                        if (Request.QueryString["controller"] != null)
+                        {
+                            lastError = $"Error reported by: {Request.QueryString["controller"]} - {Request.QueryString["action"]}";
+                        }
+                        else
+                        {
+                            lastError = "Something went wrong...";
+                        }
                     }
                 }
             }

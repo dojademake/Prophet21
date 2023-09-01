@@ -24,18 +24,9 @@ namespace P21.Rules.Visual.Controllers
         private readonly IRuleLogger _logger;
         private readonly BusinessRuleService _service = new BusinessRuleService();
 
-        //public DefaultController(IRuleLogger logger, BusinessRuleService businessRuleService)
-        //{
-        //    _service = businessRuleService;
-        //    _service.CurrentRule = Rule;
-        //    _logger = logger;
-        //}
-
         public DefaultController(IRuleLogger logger)
         {
-            //var logger = UnityContainer.Resolve<IRuleLogger>(new ParameterOverride("type", typeof(DefaultController)));
             _logger = logger;
-            //service = new BusinessRuleService();
             _service.CurrentRule = Rule;
         }
 

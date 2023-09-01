@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BaseRule.cs" />
     <Compile Include="BLL\LogicLayer.cs" />
+    <Compile Include="Models\DomainException.cs" />
     <Compile Include="Models\Enumerations\LogLevel.cs" />
     <Compile Include="BLL\Interfaces\IRuleLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
