@@ -3,21 +3,21 @@ using System.Configuration;
 
 namespace P21Custom.Extensions.BusinessRule.BLL
 {
-	internal interface IRuleLogger
-	{
-		Type DeclaringType { get; }
-		bool Initialized { get; set; }
-		BaseRule RuleToLog { get; }
-		LogLevel Threshold { get; }
+    public interface IRuleLogger
+    {
+        Type DeclaringType { get; }
+        bool Initialized { get; set; }
+        BaseRule RuleToLog { get; }
+        LogLevel Threshold { get; }
 
-		void LogCritical(string criticalMessage, Exception exception);
+        void LogCritical(string criticalMessage, Exception exception);
 
-		void LogDebug(string debugMessage);
+        void LogDebug(string debugMessage);
 
-		void LogError(string errorMessage);
+        void LogError(string errorMessage);
 
-		void LogWarning(string warningMessage);
+        void LogWarning(string warningMessage);
 
-		IRuleLogger Setup(Configuration appConfiguration);
-	}
+        IRuleLogger Setup(Configuration appConfiguration);
+    }
 }

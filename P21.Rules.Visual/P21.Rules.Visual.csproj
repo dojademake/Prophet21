@@ -83,7 +83,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="P21.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0cd9a972a8b8c384, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\P21.Extensions.dll</HintPath>
+      <HintPath>..\lib\P21.Extensions.20.1.4018\P21.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -141,6 +141,7 @@
     <Compile Include="NotFoundControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\FileUtility.cs" />
+    <Compile Include="Utilities\RuleLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DefaultBusinessRule.xml" />
@@ -244,6 +245,10 @@
     <ProjectReference Include="..\P21Custom.Entity\P21Custom.Entity.csproj">
       <Project>{caf7e77f-6c60-4c16-b52d-a04d5f3ffcc4}</Project>
       <Name>P21Custom.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\P21Custom.Extensions\P21Custom.Extensions.csproj">
+      <Project>{2838fd01-df39-46df-a5c8-3915adb59c64}</Project>
+      <Name>P21Custom.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
