@@ -40,31 +40,8 @@ namespace P21.Rules.Visual
             // Register the custom logger implementation
             container.RegisterType<IRuleLogger, RuleLogger>();
 
-            // Register other dependencies...
-            //container.RegisterType<ILoggingService, BusinessRuleService>();
-
             // Set the Unity dependency resolver
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-        }
-
-        //protected void Application_BeginRequest(Object sender, EventArgs e)
-        //{
-        //    // Your custom logic here. Set a breakpoint on the next line to inspect every incoming request.
-        //    Debug.WriteLine("Begin Request triggered for " + HttpContext.Current.Request.Url.ToString());
-        //}
-
-        //protected void Application_EndRequest(Object sender, EventArgs e)
-        //{
-        //    // Your custom logic here. Set a breakpoint on the next line to inspect every incoming request.
-        //    Debug.WriteLine("End Request triggered for " + HttpContext.Current.Request.Url.ToString());
-        //}
-
-        protected void Application_Error(object sender, EventArgs e)
-        {
-            Exception exception = Server.GetLastError();
-            // Resolve logger and log exception
-            var logger = DependencyResolver.Current.GetService<IRuleLogger>();
-            logger?.LogError(exception.ToString());
         }
     }
 }
