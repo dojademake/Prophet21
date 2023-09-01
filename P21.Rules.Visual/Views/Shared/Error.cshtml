@@ -2,8 +2,8 @@
 @model System.Web.Mvc.HandleErrorInfo
 
 @{
-    var logger = new P21.Rules.Visual.Utilities.RuleLogger();
-    logger.SetLoggerName("Internal Error Page");
+    //var logger = new P21.Rules.Visual.Utilities.RuleLogger();
+    //logger.SetLoggerName("Internal Error Page");
 
     string errorMessage = "Unknown";
     if (Model != null)
@@ -14,17 +14,17 @@
             "{4}",
             exception.GetType(), Model.ControllerName, Model.ActionName, exception.Message, exception.ToString());
 
-        logger.LogError("Exception {0} thrown in controller {1} action {2}. Exception message: {3}",
-            exception.GetType(), Model.ControllerName, Model.ActionName, exception.Message);
+        //logger.LogError("Exception {0} thrown in controller {1} action {2}. Exception message: {3}",
+        //    exception.GetType(), Model.ControllerName, Model.ActionName, exception.Message);
 
-        // if we are catching our Domain Exception, we want user to show the message.
-        var domainException = exception as DomainException;
+        //// if we are catching our Domain Exception, we want user to show the message.
+        //var domainException = exception as DomainException;
 
-        //var errorMessage = String.Empty;
-        if (domainException != null)
-        {
-            errorMessage = domainException.Message;
-        }
+        ////var errorMessage = String.Empty;
+        //if (domainException != null)
+        //{
+        //    errorMessage = domainException.Message;
+        //}
     }
     else
     {
