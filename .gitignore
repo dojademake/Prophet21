@@ -358,5 +358,4 @@ MigrationBackup/
 Epicor.P21.Popup.Model.dll
 P21.Extensions.dll
 Epicor.P21.Popup.Model.dll
-/lib/assets/baseline
-/lib/assets
+lib/assets/

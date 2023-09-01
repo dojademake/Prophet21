@@ -12,18 +12,24 @@ using System.Web.Mvc;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using P21Custom.Extensions.BusinessRule.BLL;
+using System.Web.Services.Description;
+using Unity.Resolution;
+using Unity;
 
 namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
-        private readonly BusinessRuleService service = new BusinessRuleService();
+        private readonly IRuleLogger _logger;
+        private readonly BusinessRuleService _service = new BusinessRuleService();
 
-        public DefaultController()
+        public DefaultController(IRuleLogger logger)
         {
-            service.CurrentRule = Rule;
-            //service.RequestData = Request;
+            _logger = logger;
+            _service.CurrentRule = Rule;
         }
+
 
         public ActionResult About()
         {
@@ -32,11 +38,19 @@ namespace P21.Rules.Visual.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact(string id)
         {
-            ViewBag.Message = "Resources and documentation.";
 
-            return View();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                ViewBag.Message = "Resources and documentation.";
+                return View("GetStarted");
+            }
+            else
+            {
+                ViewBag.Message = "Corporate Office";
+                return View();
+            }
         }
 
         public ActionResult Home()
@@ -49,13 +63,13 @@ namespace P21.Rules.Visual.Controllers
         {
             try
             {
-                var result = service.GetAllRules().ToList();
+                var result = _service.GetAllRules().ToList();
                 return View(result);
 
             }
             catch (Exception ex)
             {
-                return HandleException(String.Empty, ex, service.MaskedConnectionString);
+                return HandleException(String.Empty, ex, _service.MaskedConnectionString);
             }
         }
 
@@ -116,7 +130,7 @@ namespace P21.Rules.Visual.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Initialize", new { ruleController = collection.GetKey(0), ruleAction = collection.GetValue("ruleAction") });
             }
             catch
             {

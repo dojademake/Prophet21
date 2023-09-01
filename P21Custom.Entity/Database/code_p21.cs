@@ -8,6 +8,12 @@ namespace P21Custom.Entity.Database
 
     public partial class code_p21
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public code_p21()
+        {
+            this.business_rules = new HashSet<business_rule>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int code_uid { get; set; }
@@ -36,5 +42,8 @@ namespace P21Custom.Entity.Database
 
         [StringLength(255)]
         public string code_sub_description { get; set; }
+
+        [InverseProperty("rule_type")] 
+        public virtual ICollection<business_rule> business_rules { get; set; }
     }
 }
