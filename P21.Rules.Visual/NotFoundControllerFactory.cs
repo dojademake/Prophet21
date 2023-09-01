@@ -5,24 +5,7 @@ using System.Web.SessionState;
 
 namespace P21.Rules.Visual
 {
-    //public class NotFoundControllerFactory : IControllerFactory
-    //{
-    //    public IController CreateController(RequestContext requestContext, string controllerName)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public SessionStateBehavior GetControllerSessionBehavior(RequestContext requestContext, string controllerName)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public void ReleaseController(IController controller)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    // from https://stackoverflow.com/questions/48778587/mvc-routeconfig-catchall-url-not-working
+      // from https://stackoverflow.com/questions/48778587/mvc-routeconfig-catchall-url-not-working
     public class NotFoundControllerFactory : DefaultControllerFactory
     {
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)

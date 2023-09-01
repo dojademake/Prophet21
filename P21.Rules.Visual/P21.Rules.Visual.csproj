@@ -77,6 +77,12 @@
       <Version>1.202.3987.27</Version>
     </PackageReference>
     <PackageReference Include="Respond" Version="1.4.2" />
+    <PackageReference Include="Unity">
+      <Version>5.7.3</Version>
+    </PackageReference>
+    <PackageReference Include="Unity.Mvc">
+      <Version>5.0.13</Version>
+    </PackageReference>
     <PackageReference Include="WebGrease" Version="1.5.2" />
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +144,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="NotFoundControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\FileUtility.cs" />
     <Compile Include="Utilities\RuleLogger.cs" />

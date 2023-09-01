@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P21Custom.Extensions.BusinessRule.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,14 +10,23 @@ namespace P21.Rules.Visual
 {
     public partial class Error : System.Web.UI.Page
     {
+        private readonly IRuleLogger logger;
+        private Exception lastException;
+
+        public Error(IRuleLogger logger)
+        {
+            this.logger = logger;
+        }
+
         public string lastError;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                if (Server.GetLastError() != null)
+                lastException = Server.GetLastError();
+                if (lastException != null)
                 {
-                    lastError = Server.GetLastError().ToString();
+                    lastError = lastException.ToString();
                 }
                 else
                 {
@@ -32,8 +42,9 @@ namespace P21.Rules.Visual
             }
             catch (Exception ex)
             {
-                lastError = ex.Message;
+                lastError += ex.Message;
             }
+            logger.LogCritical(lastError, lastException);
         }
     }
 }

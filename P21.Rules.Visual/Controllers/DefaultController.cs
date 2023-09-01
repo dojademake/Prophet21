@@ -12,17 +12,19 @@ using System.Web.Mvc;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using P21Custom.Extensions.BusinessRule.BLL;
 
 namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
+        private readonly IRuleLogger _logger;
         private readonly BusinessRuleService service = new BusinessRuleService();
 
-        public DefaultController()
+        public DefaultController(IRuleLogger logger)
         {
             service.CurrentRule = Rule;
-            //service.RequestData = Request;
+            _logger = logger;
         }
 
         public ActionResult About()

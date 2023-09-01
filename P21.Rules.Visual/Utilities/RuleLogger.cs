@@ -26,6 +26,7 @@ namespace P21.Rules.Visual.Utilities
         private readonly LogLevel _theshold;
         public LogLevel Threshold => _theshold;
 
+        public RuleLogger() { }
         public RuleLogger(Type type, BaseRule ruleToLog)
         {
             _declaringType = type;
