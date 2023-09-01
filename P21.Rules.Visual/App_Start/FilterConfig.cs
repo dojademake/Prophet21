@@ -8,7 +8,7 @@ namespace P21.Rules.Visual
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new CustomHandleErrorAttribute());
+            filters.Add(new HandleErrorAttribute());
         }
     }
 }
