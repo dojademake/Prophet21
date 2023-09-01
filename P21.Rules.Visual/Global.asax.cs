@@ -1,5 +1,6 @@
 ﻿using P21.Rules.Visual.Utilities;
 using P21Custom.Entity.Database;
+using P21Custom.Entity.Services;
 using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Collections.Generic;
@@ -40,11 +41,10 @@ namespace P21.Rules.Visual
             container.RegisterType<IRuleLogger, RuleLogger>();
 
             // Register other dependencies...
-            //TODO: add BusinessRuleService
+            //container.RegisterType<ILoggingService, BusinessRuleService>();
 
             // Set the Unity dependency resolver
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-
         }
 
         //protected void Application_BeginRequest(Object sender, EventArgs e)

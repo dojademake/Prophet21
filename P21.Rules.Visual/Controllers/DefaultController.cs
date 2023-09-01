@@ -13,19 +13,32 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using P21Custom.Extensions.BusinessRule.BLL;
+using System.Web.Services.Description;
+using Unity.Resolution;
+using Unity;
 
 namespace P21.Rules.Visual.Controllers
 {
     public class DefaultController : BaseRuleController
     {
         private readonly IRuleLogger _logger;
-        private readonly BusinessRuleService service = new BusinessRuleService();
+        private readonly BusinessRuleService _service = new BusinessRuleService();
+
+        //public DefaultController(IRuleLogger logger, BusinessRuleService businessRuleService)
+        //{
+        //    _service = businessRuleService;
+        //    _service.CurrentRule = Rule;
+        //    _logger = logger;
+        //}
 
         public DefaultController(IRuleLogger logger)
         {
-            service.CurrentRule = Rule;
+            //var logger = UnityContainer.Resolve<IRuleLogger>(new ParameterOverride("type", typeof(DefaultController)));
             _logger = logger;
+            //service = new BusinessRuleService();
+            _service.CurrentRule = Rule;
         }
+
 
         public ActionResult About()
         {
@@ -59,13 +72,13 @@ namespace P21.Rules.Visual.Controllers
         {
             try
             {
-                var result = service.GetAllRules().ToList();
+                var result = _service.GetAllRules().ToList();
                 return View(result);
 
             }
             catch (Exception ex)
             {
-                return HandleException(String.Empty, ex, service.MaskedConnectionString);
+                return HandleException(String.Empty, ex, _service.MaskedConnectionString);
             }
         }
 
