@@ -1,4 +1,4 @@
-<!--************************************************************************************
+﻿<!--************************************************************************************
 Prophet 21 Visual Rules Test Harness
     This form will simulate sending some mock DynaChange data to a Visual Rule.
     It will help you test your visual rules without involving the P21 Middleware server.
@@ -7,6 +7,18 @@ Prophet 21 Visual Rules Test Harness
 <head>
     <link rel="stylesheet" href="../Content/bootstrap.min.css" />
     <link rel="stylesheet" href="../Content/jquery.steps.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for jQuery Steps */
+        #wizard {
+            height: 680px !important; /* Set your desired height here */
+            overflow-y: hidden; /* Hide vertical scrollbar if the content exceeds the height */
+        }
+
+        .wizard > .content {
+            min-height: 60em; /* Set your desired min-height value here */
+        }
+    </style>
 
     <script type="text/javascript" src="../Scripts/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery.format.js"></script>
@@ -17,7 +29,7 @@ Prophet 21 Visual Rules Test Harness
         var rootVBRURL = window.location.protocol + "//" + window.location.host + "/";
 
         //************************************************************************************
-        //This initializes the test harness with mock server data and setups up the form. 
+        //This initializes the test harness with mock server data and setups up the form.
         //************************************************************************************
         function init(element, eventName, eventHandler) {
             //setup the root url
@@ -141,57 +153,61 @@ Prophet 21 Visual Rules Test Harness
     </script>
 </head>
 <body>
-    <div class="nav navbar navbar-default" style="padding: 10px">
-        <h1>Visual Rule Test Harness</h1>
-        <p>This will allow you to send business rule data to the Sample Visual Rule as if it was triggered from the server.</p>
+    <div class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px">
+        <div style="display: flex; flex-direction: column;">
+            <h1>Visual Rule Test Harness</h1>
+            <p>This will allow you to send business rule data to the Sample Visual Rule as if it was triggered from the server.</p>
+        </div>
     </div>
 
     <form name="vbrForm" id="vbrForm" method="post" target="vbrIFrame">
         <div id="wizard">
             <h3>Execution Rule Activation</h3>
-            <section style="overflow:scroll" >
+            <section style="overflow: none;">
                 <p>Visual Rule URL</p>
-                <div class="input-group">
-                    <span id="rootVBRURL" class="input-group-addon">RootURL</span>
-                    <input class="form-control" type="text" name="action" id="action" value="Initialize?ruleController=SampleRule1/SampleRule1&ruleAction=FormView" />
+                <div class="input-group mb-3">
+                    <span id="rootVBRURL" class="input-group-text">RootURL</span>
+                    <input type="text" class="form-control" name="action" id="action" value="Initialize?ruleController=SampleRule1/SampleRule1&ruleAction=FormView" />
                 </div>
 
-                <div class="input-group">
-                    <span id="lblUserName" class="input-group-addon">User:</span>
-                    <input class="form-control" type="text" name="txtUserName" id="txtUserName" />
-                    <span id="lblPassword" class="input-group-addon">Password:</span>
-                    <input class="form-control" type="password" name="txtPassword" id="txtPassword" />
-                </div>
-                <div class="input-group">
-                    <span id="lblSOAURL" class="input-group-addon">API URL:</span>
-                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" value="https://euvm-p21insights.westus2.cloudapp.azure.com/" />
+                <div class="input-group mb-3">
+                    <span id="lblUserName" class="input-group-text">User:</span>
+                    <input type="text" class="form-control" name="txtUserName" id="txtUserName" />
+                    <span id="lblPassword" class="input-group-text">Password:</span>
+                    <input type="password" class="form-control" name="txtPassword" id="txtPassword" />
                 </div>
 
+                <div class="input-group mb-3">
+                    <span id="lblSOAURL" class="input-group-text">API URL:</span>
+                    <input type="text" class="form-control" name="txtSOAURL" id="txtSOAURL" value="https://euvm-p21insights.westus2.cloudapp.azure.com/" />
+                </div>
 
-                <div style="padding-bottom: 10px; padding-top: 10px">
+                <div class="mb-3 pt-3">
                     <p>Data for Server Request</p>
-                    <textarea name="ruleRequest" id="ruleRequest" rows="15" style="width:100%"></textarea>
+                    <textarea name="ruleRequest" id="ruleRequest" rows="8" class="form-control"></textarea>
                 </div>
 
-                <button class="btn btn-warning pull-right" type="button" value="Submit" onclick="submitServerRequest()">Start Execution  <i class="glyphicon glyphicon-arrow-right"></i></button>
-
+                <button class="btn btn-warning float-end" type="button" value="Submit" onclick="submitServerRequest()">Start Execution &raquo;</button>
             </section>
             <h3>Diplay Rule Visualizations</h3>
             <section style="overflow:auto">
-                <h3 style="margin-top: 0"><i class="glyphicon glyphicon-eye-open"></i> Here is how your visual rule looks!</h3>
-                
-                <iframe id='vbrIFrame' name='vbrIFrame' src='' style="width:100%; height: 400px"></iframe>
+                <h3 style="margin-top: 0"><i class="bi bi-eye"></i> Here is how your visual rule looks!</h3>
+
+                <iframe id='vbrIFrame' name='vbrIFrame' src='' style="width:100%; height: 480px"></iframe>
             </section>
             <h3>Return Rule Response</h3>
             <section>
                 <div id="vbrResponsePanel">
-                    <h3 style="margin-top: 0; margin-bottom: 5px"><i class="glyphicon glyphicon-ok-sign" style="color: green"></i>  Congratulations!</h3>
+                    <h3 style="margin-top: 0; margin-bottom: 5px">
+                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+                        Congratulations!
+                    </h3>
                     <p>You have executed a full round trip visual rule simulation successfully.</p>
                     <p>Data Returned from Visual Rule Response</p>
                     <div style="padding-bottom: 10px">
                         <textarea name="ruleResponse" id="ruleResponse" rows="15" style="width:100%"></textarea>
                     </div>
-                    <button class="btn btn-danger pull-right" type="button" value="Reset" onclick="resetWizard()">Run Again <i class="glyphicon glyphicon-repeat"></i></button>
+                    <button class="btn btn-secondary float-end" type="button" value="Reset" onclick="resetWizard()">Run Again ↺</button>
                 </div>
             </section>
 

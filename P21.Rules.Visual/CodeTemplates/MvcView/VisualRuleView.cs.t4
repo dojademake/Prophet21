@@ -26,7 +26,7 @@ if (!String.IsNullOrEmpty(LayoutPageFile)) {
 {
 	<h2><#= ViewName#></h2>
     <form>
-        <button class="btn btn-warning pull-right" type="submit">Return   <i class="glyphicon glyphicon-arrow-right"></i></button>
+        <button class="btn btn-warning pull-right" type="submit">Return   &rarr;</button>
     </form>
 }
 
