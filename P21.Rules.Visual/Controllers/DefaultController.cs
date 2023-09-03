@@ -80,8 +80,12 @@ namespace P21.Rules.Visual.Controllers
         }
 
         // GET: Default/Create
+        //[RequireHttps]
         public ActionResult Create()
         {
+            Uri uri = Request.Url;
+            ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
+
             if (!Rule.IsInitialized())
             {
                 string content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
