@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.business_rule_event_key.key_value)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.rule_type.code_description)
+            @Html.DisplayNameFor(model => model.rule_type)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.rule_name)
@@ -160,7 +160,7 @@
                         @Html.DisplayFor(modelItem => item.business_rule_event_uid)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.run_type_cd)
+                        @Html.DisplayFor(modelItem => item.run_type.code_description)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.enabled_for_version_cd)

@@ -113,5 +113,7 @@ namespace P21Custom.Entity.Database
         [ForeignKey("rule_type_cd")] 
         public virtual code_p21 rule_type { get; set; }
 
+        [ForeignKey("run_type_cd")] 
+        public virtual code_p21 run_type { get; set; }
     }
 }

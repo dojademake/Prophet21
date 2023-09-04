@@ -71,7 +71,7 @@ namespace P21.Rules.Visual.Controllers
         {
             try
             {
-                var result = _service.GetAllRules().ToList();
+                var result = _service.GetAllRules().Where(br => br.rule_page_url != null).ToList();
                 return View(result);
 
             }
@@ -128,12 +128,7 @@ namespace P21.Rules.Visual.Controllers
                 SetupTestControls();
                 if (ModelState.IsValid)
                 {
-                    if (Rule.IsInitialized())
-                    {
-                        //return View(collection["UID"]);
-
-                    }
-                    else
+                    if (!Rule.IsInitialized())
                     {
                         var token = await GetTokenAsync(collection["txtSOAURL"], collection["txtUserName"], collection["txtPassword"]);
                         if (!token.ToLower().Contains("error"))

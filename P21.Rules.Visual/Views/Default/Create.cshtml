@@ -16,8 +16,7 @@
 
 <hr />
 <div class="row">
-    @using (Html.BeginForm())
-    {
+    <form name="vbrForm" id="vbrForm" method="post" target="_self">
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -60,8 +59,9 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button class="btn btn-warning float-end" type="button" onclick="submitServerRequest()">Start Execution &raquo;</button>
-                    <input type="submit" />
+                    <button class="btn btn-warning pull-right" type="button" onclick="submitServerRequest()" title="Use JavaScript to get a token on the client side.">Start &raquo;</button>
+                    @*<button class="btn btn-warning float-end" type="button" value="Submit" onclick="submitServerRequest()">Start Execution &raquo;</button>*@
+                    <input type="submit" value="Execution &raquo;" class="btn btn-warning float-end" title="Server-side retrieval of token." />
                 </div>
             </div>
         </div>
@@ -69,13 +69,7 @@
         <input type="hidden" name="vbrData" id="vbrData" />
         <input type="hidden" name="token" id="token" />
         <input type="hidden" name="soaURL" id="soaURL" />
-    }
-
-    <div class="embed-responsive embed-responsive-16by9 m-3">
-        <h4>Diplay Rule Visualizations</h4>
-        <h5 style="margin-top: 0"><i class="bi bi-eye"></i> Here is how your visual rule looks!</h5>
-        <iframe class="embed-responsive-item border rounded shadow" id='vbrIFrame' name='vbrIFrame' src='' style="width:100%; height: 480px"></iframe>
-    </div>
+    </form>
 </div>
 
 @section Scripts {
