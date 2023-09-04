@@ -16,7 +16,8 @@
 
 <hr />
 <div class="row">
-    <form name="vbrForm" id="vbrForm" method="post" target="vbrIFrame">
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -61,7 +62,7 @@
         <input type="hidden" name="vbrData" id="vbrData" />
         <input type="hidden" name="token" id="token" />
         <input type="hidden" name="soaURL" id="soaURL" />
-    </form>
+    }
 
     <div class="embed-responsive embed-responsive-16by9 m-3">
         <h4>Diplay Rule Visualizations</h4>

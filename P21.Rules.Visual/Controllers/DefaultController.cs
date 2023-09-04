@@ -17,6 +17,13 @@ using System.Web.Services.Description;
 using Unity.Resolution;
 using Unity;
 using P21Custom.Entity.Database;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections.Specialized;
+using System.Web.Routing;
+using Moq;
 
 namespace P21.Rules.Visual.Controllers
 {
@@ -110,7 +117,7 @@ namespace P21.Rules.Visual.Controllers
         // POST: Default/Create
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
@@ -124,8 +131,17 @@ namespace P21.Rules.Visual.Controllers
                     {
                         foreach (var key in collection.AllKeys)
                         {
-                            var value = collection[key];    
-                            
+                            var value = collection[key];
+                        }
+
+                        var token = await GetTokenAsync(collection["txtSOAURL"], collection["txtUserName"], collection["txtPassword"]);
+                        if (!token.ToLower().Contains("error"))
+                        {
+                            return InitializeRule(collection, token);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, $"Requesting token resulted in '{token}' message.");
                         }
                     }
                 }
@@ -136,6 +152,40 @@ namespace P21.Rules.Visual.Controllers
             {
                 return View();
             }
+        }
+
+        private ActionResult InitializeRule(FormCollection collection, string token)
+        {
+            // Get ruleController and ruleAction values from the collection["action"] value
+            var actionUrl = new Uri(collection["action"], UriKind.RelativeOrAbsolute);
+            var queryParameters = HttpUtility.ParseQueryString(actionUrl.Query);
+            string ruleController = queryParameters["ruleController"];
+            string ruleAction = queryParameters["ruleAction"];
+
+            // Create a mock Request object and add form data to it
+            NameValueCollection form = new NameValueCollection
+            {
+                ["vbrData"] = collection["vbrData"],
+                ["token"] = token,
+                ["soaURL"] = collection["soaURL"]
+            };
+
+            var mockRequest = new Mock<HttpRequestBase>();
+            mockRequest.Setup(r => r.Form).Returns(form);
+            var mockHttpContext = new Mock<HttpContextBase>();
+            mockHttpContext.Setup(c => c.Request).Returns(mockRequest.Object);
+
+            // Create an instance of the target controller
+            InitializeController targetController = new InitializeController();
+
+            // Set its ControllerContext
+            targetController.ControllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), targetController);
+
+            // Execute the target action method
+            ActionResult result = targetController.Index(ruleController, ruleAction);
+
+            // Handle the result, e.g., by redirecting to another action
+            return RedirectToAction(ruleAction, $"{ruleController}Controller");
         }
 
         // GET: Default/Edit/5
@@ -231,6 +281,31 @@ namespace P21.Rules.Visual.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
+        {
+            var tokenUrl = soaURL + "api/security/token/v2";
+
+            var httpClient = new HttpClient();
+            var payload = new
+            {
+                UserName = userName,
+                Password = password
+            };
+            var jsonPayload = JsonConvert.SerializeObject(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync(tokenUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = await response.Content.ReadAsStringAsync();
+                return responseJson; // This will be your token
+            }
+            else
+            {
+                return "Error"; // Or handle the error appropriately
             }
         }
 
