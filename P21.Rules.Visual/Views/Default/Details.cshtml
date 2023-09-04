@@ -182,13 +182,13 @@
 
 
                 @* TODO: Not available until P21.Extensions.dll v 21.2.4483
-                <dt>
-                    @Html.DisplayNameFor(model => model.Session.WorkstationID)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Session.WorkstationID)
-                </dd>
-                    *@
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Session.WorkstationID)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Session.WorkstationID)
+                    </dd>
+                *@
             </dl>
         }
 
@@ -212,8 +212,13 @@
 </p>
 
 <p>
-    Use @Html.ActionLink("this", "Index", "Initialize", new { ruleController = "Default", ruleAction = "Details" }, new { @class = "text-primary" })
-    <a href="~/Default/Details" class="text-secondary">area</a>
+    Use
+    @Html.ActionLink("this", "Index", "Initialize", new { ruleController = "Default", ruleAction = "Details" }, new
+    {
+        @class = "text-primary",
+        title = "Will return a 404 since Initialize only accepts POST not GET requests."
+    })
+    <a href="~/Default/Details" class="text-secondary" title="Only works after a rule is initialized.">area</a>
     to provide additional information.
 </p>
 
