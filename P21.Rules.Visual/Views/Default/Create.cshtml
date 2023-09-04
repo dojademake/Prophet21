@@ -11,6 +11,7 @@
     </div>
 </div>
 
+<hr />
 <div class="row">
     @using (Html.BeginForm())
     {
@@ -18,10 +19,14 @@
 
         <div class="form-horizontal">
             <h4>Execution Rule Activation</h4>
-            <p>Visual Rule URL</p>
-            <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+            <div class="input-group mb-3">
+                @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
+                @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+            </div>
+
+            <p>Visual Rule URL</p>
             <div class="input-group mb-3">
                 <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
                 <input class="form-control" type="text" name="action" id="action" style="max-width:480px;" value="Initialize?ruleController=Default&ruleAction=Index" />
@@ -46,13 +51,119 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Start Execution &raquo;" class="btn btn-warning float-end" />
+                    <button class="btn btn-warning float-end" type="button" value="Submit" onclick="submitServerRequest()">Start Execution &raquo;</button>
                 </div>
             </div>
         </div>
+
+        <input type="hidden" name="vbrData" id="vbrData" />
+        <input type="hidden" name="token" id="token" />
+        <input type="hidden" name="soaURL" id="soaURL" />
     }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        //************************************************************************************
+        //This initializes the test harness with mock server data and setups up the form.
+        //************************************************************************************
+        function init(element, eventName, eventHandler) {
+            //Wire up the test harness to listen for the post back from the Visual Rule
+            //in order to capture the response.
+            if (element.addEventListener) {
+                element.addEventListener(eventName, eventHandler, false);
+            }
+            else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
+
+        //************************************************************************************
+        //This simulates posting a request to the Visual Rule form from the P21 Middleware Server.
+        //************************************************************************************
+        function submitServerRequest() {
+            var token;
+            var soaURL = $('#txtSOAURL').val();
+            // sanity check
+            if (!soaURL.endsWith('/')) {
+                soaURL += '/';
+            }
+            try {
+                var response = getToken();
+                if (!response || response === '' || response.toLowerCase().indexOf('resourceerror') > -1) {
+                    alert("Authentication Error: Token couldn't be retrieved from SOA");
+                    return;
+                }
+                response = JSON.parse(response);
+                token = response.AccessToken;
+            }
+            catch (err) {
+                alert("Error retreving token: " + err.message);
+                return;
+            }
+
+            //append the RootURL variable to the Action URL
+            //This maps area / rule
+            var action = rootVBRURL + $('#action').val();
+
+            //get an instance to the form
+            var frm = document.getElementById('vbrForm');
+            frm.action = action;
+
+            var data = $("#ruleRequest").val();
+            data = btoa(data);
+
+            $('#vbrData').val(data);
+            $('#token').val(token);
+            $('#soaURL').val(soaURL);
+
+            //submit the form with the data to be used by the visual rule
+            frm.submit();
+
+            //advance the wizard to show the Visual Rule
+            $("#wizard").steps("next");
+
+            function getToken() {
+                var tokenUrl = soaURL + 'api/security/token/v2';
+                var user = $('#txtUserName').val();
+                var pass = $('#txtPassword').val();
+                var params = {
+                    UserName: user,
+                    Password: pass
+                };
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", tokenUrl, false);
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                xmlhttp.setRequestHeader("Accept", "application/json");
+                xmlhttp.send(JSON.stringify(params));
+                return xmlhttp.responseText;
+            }
+        }
+
+        //************************************************************************************
+        //This recieves the message back from the Visual Rule after it completes its process
+        //and calls the RedirectToAction("Close", "Initialize") in the controller.
+        //************************************************************************************
+        function ruleCompleted(e) {
+            //capture the returned XML from the Visual Rule Response
+            var responseData = JSON.parse(e.data)
+            var brXML = responseData.Xml;
+            brXML = atob(brXML);
+
+            //display the returned response from the visual rule and use JQuery to format the XML
+            document.getElementById("ruleResponse").value = brXML;
+            $('#ruleResponse').format({ method: 'xml' });
+
+            //advance the wizard
+            $("#wizard").steps("next");
+        }
+
+        //initializes the window and attach a message event to it.  This will
+        //get called when the Visual Rule's controller makes a call to
+        //RedirectToAction("Close", "Initialize", new { area = "" });
+        init(window, 'message', ruleCompleted);
+    </script>
+
 }

@@ -16,6 +16,7 @@ using P21Custom.Extensions.BusinessRule.BLL;
 using System.Web.Services.Description;
 using Unity.Resolution;
 using Unity;
+using P21Custom.Entity.Database;
 
 namespace P21.Rules.Visual.Controllers
 {
@@ -86,6 +87,9 @@ namespace P21.Rules.Visual.Controllers
             Uri uri = Request.Url;
             ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
 
+            ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
+
+
             if (!Rule.IsInitialized())
             {
                 string content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
@@ -110,7 +114,21 @@ namespace P21.Rules.Visual.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    if (Rule.IsInitialized())
+                    {
+
+                    }
+                    else
+                    {
+                        foreach (var key in collection.AllKeys)
+                        {
+                            var value = collection[key];    
+                            
+                        }
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
