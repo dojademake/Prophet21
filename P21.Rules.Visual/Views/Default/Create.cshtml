@@ -22,16 +22,22 @@
 
         <div class="form-horizontal">
             <h4>Execution Rule Activation</h4>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-            <div class="input-group mb-3">
-                @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
-                @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
-            </div>
+            @if (ViewBag.BusinessRulesList != null)
+            {
+                <div class="input-group mb-3">
+                    @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
+                    @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+                </div>
+            }
 
             <p>Visual Rule URL</p>
             <div class="input-group mb-3">
-                <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
+                @if (ViewBag.rootVBRURL != null)
+                {
+                    <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
+                }
                 <input class="form-control" type="text" name="action" id="action" style="max-width:480px;" value="Initialize?ruleController=Default&ruleAction=Details" />
             </div>
 
@@ -55,6 +61,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button class="btn btn-warning float-end" type="button" onclick="submitServerRequest()">Start Execution &raquo;</button>
+                    <input type="submit" />
                 </div>
             </div>
         </div>
@@ -87,6 +94,7 @@
             else if (element.attachEvent) {
                 element.attachEvent('on' + eventName, eventHandler);
             }
+            $('#ruleRequest').format({ method: 'xml' });
         }
 
         //************************************************************************************
