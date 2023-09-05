@@ -204,12 +204,17 @@
             </dd>
 
         </dl>
+
+        <p>
+            @if (Model.RuleState != null)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.RuleState.UID })
+                <text>|</text>
+            }
+            @Html.ActionLink("Back to List", "Index")
+        </p>
     }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RuleState.UID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 <p>
     Use

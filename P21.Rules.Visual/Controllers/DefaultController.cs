@@ -1,30 +1,23 @@
-﻿using P21Custom.Entity.Services;
+﻿using Moq;
+using Newtonsoft.Json;
 using P21.Extensions.Web;
 using P21.Rules.Visual.Utilities;
+using P21Custom.Entity.Services;
+using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
-using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.IO;
-using System.Reflection;
 using System.Diagnostics;
-using P21Custom.Extensions.BusinessRule.BLL;
-using System.Web.Services.Description;
-using Unity.Resolution;
-using Unity;
-using P21Custom.Entity.Database;
-using Newtonsoft.Json;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Specialized;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
-using Moq;
-using System.Web.WebSockets;
 
 namespace P21.Rules.Visual.Controllers
 {
@@ -39,7 +32,6 @@ namespace P21.Rules.Visual.Controllers
             _service.CurrentRule = Rule;
         }
 
-
         public ActionResult About()
         {
             ViewBag.Message = "Web hosting and protocol values listed below.";
@@ -49,7 +41,6 @@ namespace P21.Rules.Visual.Controllers
 
         public ActionResult Contact(string id)
         {
-
             if (string.IsNullOrWhiteSpace(id))
             {
                 ViewBag.Message = "Resources and documentation.";
@@ -60,32 +51,6 @@ namespace P21.Rules.Visual.Controllers
                 ViewBag.Message = "Corporate Office";
                 return View();
             }
-        }
-
-        public ActionResult Home()
-        {
-            return View();
-        }
-
-        // GET: Default
-        public ActionResult Index()
-        {
-            try
-            {
-                var result = _service.GetAllRules().Where(br => br.rule_page_url != null).ToList();
-                return View(result);
-
-            }
-            catch (Exception ex)
-            {
-                return HandleException(String.Empty, ex, _service.MaskedConnectionString);
-            }
-        }
-
-        // GET: Default/Details/5
-        public ActionResult Details()
-        {
-            return View(Rule);
         }
 
         // GET: Default/Create
@@ -135,22 +100,6 @@ namespace P21.Rules.Visual.Controllers
             return View();
         }
 
-        private void SetupTestControls()
-        {
-            try
-            {
-                Uri uri = Request.Url;
-                ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
-
-                ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.rootVBRURL = ex.ToString();
-                ViewBag.BusinessRulesList = new SelectList(new List<string> { ex.Message });
-            }
-        }
-
         // POST: Default/Create
         [HttpPost]
         [ValidateInput(false)]
@@ -180,6 +129,180 @@ namespace P21.Rules.Visual.Controllers
                 return HandleException(String.Empty, ex, collection["txtSOAURL"]);
             }
             return View(Rule);
+        }
+
+        // GET: Default/Delete/5
+        public ActionResult Delete(string id)
+        {
+            string extension = "dll";
+            if (string.IsNullOrEmpty(id))
+            {
+                id = "bin";
+            }
+            else
+            {
+                if (id.Contains(","))
+                {
+                    extension = id.Split(',')[1];
+                    id = id.Split(',')[0];
+                }
+            }
+
+            string binPath = Server.MapPath($"~/{id}");
+            string[] dllFiles = Directory.GetFiles(binPath, $"*.{extension}");
+
+            var versions = new List<FileVersionInfo>();
+            foreach (string dllFile in dllFiles)
+            {
+                try
+                {
+                    FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(dllFile);
+                    versions.Add(fileVersionInfo);
+                }
+                catch (Exception ex)
+                {
+                    //TODO: log message
+                    versions.Add(FileVersionInfo.GetVersionInfo(ex.Message));
+                }
+            }
+
+            string rootPath = Server.MapPath("~"); // Map the root path of the application
+            string[] subdirectories = Directory.GetDirectories(binPath);
+
+            ViewBag.Subdirectories = subdirectories; // Pass the subdirectories to the view
+
+            return View(versions);
+        }
+
+        // POST: Default/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Default/Details/5
+        public ActionResult Details()
+        {
+            return View(Rule);
+        }
+
+        public ActionResult Directory(string id)
+        {
+            return Delete(id);
+        }
+
+        // GET: Default/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: Default/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index", "Initialize", new { ruleController = collection.GetKey(0), ruleAction = collection.GetValue("ruleAction") });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
+        {
+            var tokenUrl = soaURL + "api/security/token/v2";
+
+            var httpClient = new HttpClient();
+            var payload = new
+            {
+                UserName = userName,
+                Password = password
+            };
+            var jsonPayload = JsonConvert.SerializeObject(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync(tokenUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = await response.Content.ReadAsStringAsync();
+                return responseJson; // This will be your token
+            }
+            else
+            {
+                return "Error"; // Or handle the error appropriately
+            }
+        }
+
+        public ActionResult Home()
+        {
+            return View();
+        }
+
+        // GET: Default
+        public ActionResult Index()
+        {
+            try
+            {
+                var result = _service.GetAllRules().Where(br => br.rule_page_url != null).ToList();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(String.Empty, ex, _service.MaskedConnectionString);
+            }
+        }
+
+        public ActionResult List()
+        {
+            return View("Index");
+        }
+
+        public ActionResult Test(string id)
+        {
+            return Create(id);
+        }
+
+        private string GetFileVersion(string filePath)
+        {
+            try
+            {
+                var assembly = Assembly.LoadFile(filePath);
+                var version = assembly.GetName().Version;
+                return version.ToString();
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+        }
+
+        private ActionResult HandleException(string key, Exception ex, string errorMessage)
+        {
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                ModelState.AddModelError(key, errorMessage);
+            }
+            if (ex != null)
+            {
+                ModelState.AddModelError(key, ex);
+                ModelState.AddModelError(ex.GetType().Name, ex.Message);
+            }
+            return View();
         }
 
         private ActionResult InitializeRule(FormCollection collection, string token)
@@ -223,139 +346,20 @@ namespace P21.Rules.Visual.Controllers
             }
         }
 
-        // GET: Default/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Default/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        private void SetupTestControls()
         {
             try
             {
-                // TODO: Add update logic here
+                Uri uri = Request.Url;
+                ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
 
-                return RedirectToAction("Index", "Initialize", new { ruleController = collection.GetKey(0), ruleAction = collection.GetValue("ruleAction") });
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Default/Delete/5
-        public ActionResult Delete(string id)
-        {
-            string extension = "dll";
-            if (string.IsNullOrEmpty(id))
-            {
-                id = "bin";
-            }
-            else
-            {
-                if (id.Contains(","))
-                {
-                    extension = id.Split(',')[1];
-                    id = id.Split(',')[0];
-                }
-            }
-
-            string binPath = Server.MapPath($"~/{id}");
-            string[] dllFiles = Directory.GetFiles(binPath, $"*.{extension}");
-
-            var versions = new List<FileVersionInfo>();
-            foreach (string dllFile in dllFiles)
-            {
-                try
-                {
-                    FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(dllFile);
-                    versions.Add(fileVersionInfo);
-                }
-                catch (Exception ex)
-                {
-                    //TODO: log message
-                    versions.Add(FileVersionInfo.GetVersionInfo(ex.Message));
-                }
-            }
-
-            string rootPath = Server.MapPath("~"); // Map the root path of the application
-            string[] subdirectories = Directory.GetDirectories(binPath);
-
-            ViewBag.Subdirectories = subdirectories; // Pass the subdirectories to the view
-
-
-            return View(versions);
-        }
-
-        private string GetFileVersion(string filePath)
-        {
-            try
-            {
-                var assembly = Assembly.LoadFile(filePath);
-                var version = assembly.GetName().Version;
-                return version.ToString();
+                ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
             }
             catch (Exception ex)
             {
-                return "Error: " + ex.Message;
+                ViewBag.rootVBRURL = ex.ToString();
+                ViewBag.BusinessRulesList = new SelectList(new List<string> { ex.Message });
             }
-        }
-
-        // POST: Default/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
-        {
-            var tokenUrl = soaURL + "api/security/token/v2";
-
-            var httpClient = new HttpClient();
-            var payload = new
-            {
-                UserName = userName,
-                Password = password
-            };
-            var jsonPayload = JsonConvert.SerializeObject(payload);
-            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-            var response = await httpClient.PostAsync(tokenUrl, content);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseJson = await response.Content.ReadAsStringAsync();
-                return responseJson; // This will be your token
-            }
-            else
-            {
-                return "Error"; // Or handle the error appropriately
-            }
-        }
-
-        private ActionResult HandleException(string key, Exception ex, string errorMessage)
-        {
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                ModelState.AddModelError(key, errorMessage);
-            }
-            if (ex != null)
-            {
-                ModelState.AddModelError(key, ex);
-                ModelState.AddModelError(ex.GetType().Name, ex.Message);
-            }
-            return View();
         }
     }
 }
