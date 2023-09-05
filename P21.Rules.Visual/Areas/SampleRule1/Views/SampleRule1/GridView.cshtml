@@ -1,0 +1,40 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewBag.Title = "GridView";
+    Layout = "~/Views/Shared/_VisualRuleLayout.cshtml";
+}
+<div>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("FormView", "SampleRule1")'">Form View</button>
+    <button style="padding-left:10px" type="button" class="btn btn-primary" onclick="location.href='@Url.Action("RuleView", "SampleRule1")'">Rule View</button>
+    <hr />
+</div>
+
+@using (Html.BeginForm("Return", "SampleRule1", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <form>
+            <h3>Customers</h3>
+            @{
+                var grid = new WebGrid(Model, canPage: true, canSort: true, rowsPerPage: 2);
+                grid.Pager(WebGridPagerModes.NextPrevious);
+            }
+            <div>
+                @grid.GetHtml(htmlAttributes: new
+{
+    id = "grid",
+    @class = "table table-bordered table-striped table-condensed"
+},
+            emptyRowCellValue: "No Records Found",
+            headerStyle: "grid-header")
+            </div>
+
+            <button class="btn btn-warning pull-right" type="submit">Return   &rarr;</i></button>
+        </form>
+
+    </div>
+}
+
+
+
+
