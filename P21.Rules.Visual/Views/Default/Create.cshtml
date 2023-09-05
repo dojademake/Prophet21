@@ -4,7 +4,6 @@
     ViewBag.Title = "Test Harness";
 }
 
-@*@section Styles {*@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 
 <div class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px">
@@ -31,39 +30,44 @@
                 </div>
             }
 
-            <p>Visual Rule URL</p>
-            <div class="input-group mb-3">
-                @if (ViewBag.rootVBRURL != null)
-                {
-                    <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
-                }
-                <input class="form-control" type="text" name="action" id="action" style="max-width:480px;" value="Initialize?ruleController=Default&ruleAction=Details" />
-            </div>
 
-            <div class="input-group mb-3">
-                <span id="lblUserName" class="input-group-text">User:</span>
-                <input class="form-control" type="text" name="txtUserName" id="txtUserName" value="@Model.Session.UserID" />
-                <span id="lblPassword" class="input-group-text">Password:</span>
-                <input class="form-control" type="password" name="txtPassword" id="txtPassword" />
-            </div>
 
-            <div class="input-group mb-3">
-                <span id="lblSOAURL" class="input-group-text">API URL:</span>
-                <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@Model.RuleState.RulePageUrl" />
-            </div>
-
-            <div class="mb-3 pt-3">
-                <p>Data for Server Request</p>
-                <textarea name="ruleRequest" id="ruleRequest" rows="8" class="form-control" style="max-width:680px;">@Model.XmlData</textarea>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button class="btn btn-warning pull-right" type="button" onclick="submitServerRequest()" title="Use JavaScript to get a token on the client side.">Start &raquo;</button>
-                    @*<button class="btn btn-warning float-end" type="button" value="Submit" onclick="submitServerRequest()">Start Execution &raquo;</button>*@
-                    <input type="submit" value="Execution &raquo;" class="btn btn-warning float-end" title="Server-side retrieval of token." />
+            @if (Model != null)
+            {
+                <p>Visual Rule URL</p>
+                <div class="input-group mb-3">
+                    @if (ViewBag.rootVBRURL != null)
+                    {
+                        <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
+                    }
+                    <input class="form-control" type="text" name="action" id="action" style="max-width:480px;" value="@Model.RuleState.RulePageUrl" />  @*Initialize?ruleController=Default&ruleAction=Details" />*@
                 </div>
-            </div>
+
+                <div class="input-group mb-3">
+                    <span id="lblUserName" class="input-group-text">User:</span>
+                    <input class="form-control" type="text" name="txtUserName" id="txtUserName" value="@Model.Session.UserID" />
+                    <span id="lblPassword" class="input-group-text">Password:</span>
+                    <input class="form-control" type="password" name="txtPassword" id="txtPassword" />
+                </div>
+
+                <div class="input-group mb-3">
+                    <span id="lblSOAURL" class="input-group-text">API URL:</span>
+                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@Model.RuleState.RulePageUrl" />
+                </div>
+
+                <div class="mb-3 pt-3">
+                    <p>Data for Server Request</p>
+                    <textarea name="ruleRequest" id="ruleRequest" rows="8" class="form-control" style="max-width:680px;">@Model.XmlData</textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-warning pull-right" type="button" onclick="submitServerRequest()" title="Use JavaScript to get a token on the client side.">Start &raquo;</button>
+                        @*<button class="btn btn-warning float-end" type="button" value="Submit" onclick="submitServerRequest()">Start Execution &raquo;</button>*@
+                        <input type="submit" value="Execution &raquo;" class="btn btn-warning float-end" title="Server-side retrieval of token." />
+                    </div>
+                </div>
+            }
         </div>
 
         <input type="hidden" name="vbrData" id="vbrData" />

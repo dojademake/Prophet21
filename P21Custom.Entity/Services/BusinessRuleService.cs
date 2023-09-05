@@ -66,11 +66,16 @@ namespace P21Custom.Entity.Services
             }
         }
 
-        //public HttpRequest RequestData { get; set; }
+        public business_rule FindRule(int uid)
+        {
+            return Db.business_rule.Find(uid);
+        }
 
         public IEnumerable<business_rule> GetAllRules()
         {
             return Db.business_rule.Where(br => br.internal_rule_flag == "N").OrderBy(br => br.rule_name);
         }
+
+
     }
 }

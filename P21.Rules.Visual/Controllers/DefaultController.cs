@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Web.Routing;
 using Moq;
+using System.Web.WebSockets;
 
 namespace P21.Rules.Visual.Controllers
 {
@@ -89,13 +90,33 @@ namespace P21.Rules.Visual.Controllers
 
         // GET: Default/Create
         //[RequireHttps]
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
             SetupTestControls();
 
             if (!Rule.IsInitialized())
             {
-                string content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                string content = string.Empty;
+
+                int uid;
+                if (int.TryParse(id, out uid))
+                {
+                    content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+
+                    if (content == null)
+                    {
+                        var busRule = _service.FindRule(uid);
+                        if (busRule != null)
+                        {
+                            content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(content))
+                {
+                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                }
 
                 if (content != null)
                 {
@@ -107,15 +128,27 @@ namespace P21.Rules.Visual.Controllers
                     return View("Error", new HandleErrorInfo(new Exception("Error initializing Web Visual Rule"), "Default", "Create"));
                 }
             }
-            return View(Rule);
+            if (Rule != null)
+            {
+                return View(Rule);
+            }
+            return View();
         }
 
         private void SetupTestControls()
         {
-            Uri uri = Request.Url;
-            ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
+            try
+            {
+                Uri uri = Request.Url;
+                ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
 
-            ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
+                ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.rootVBRURL = ex.ToString();
+                ViewBag.BusinessRulesList = new SelectList(new List<string> { ex.Message });
+            }
         }
 
         // POST: Default/Create
