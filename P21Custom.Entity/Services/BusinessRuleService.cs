@@ -66,11 +66,28 @@ namespace P21Custom.Entity.Services
             }
         }
 
-        //public HttpRequest RequestData { get; set; }
+        public business_rule FindRule(int uid)
+        {
+            return Db.business_rule.Find(uid);
+        }
+
+        /// <summary>
+        /// The intention of this method is to create an XML output of "fake" data to easily test new rules without having to use the "Generate XML for Unit Test" button in P21.
+        /// </summary>
+        /// <param name="uid">The unique identifier of a rule stored in the buiness_rules table</param>
+        /// <returns>An XML string with a root business_rule_extensions_xml and fieldList nodes containing typical fieldValue entries</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string GenerateXmlForRule(int uid)
+        {
+            //TODO: look at D:\Repos\XX_Entity_Framework\P21_Database_Context\Repository\FileRepository.cs to determine how to create a fake XML file
+            throw new NotImplementedException();
+        }
 
         public IEnumerable<business_rule> GetAllRules()
         {
             return Db.business_rule.Where(br => br.internal_rule_flag == "N").OrderBy(br => br.rule_name);
         }
+
+
     }
 }

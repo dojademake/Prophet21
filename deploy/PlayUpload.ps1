@@ -6,10 +6,10 @@ $sftpPort = 47506
 $sftpUser = Read-Host "Enter SFTP Username"
 $sftpPassword = Read-Host "Enter SFTP Password" -AsSecureString
 $localPath = Read-Host "Enter Local Path (Press Enter for default 'app.publish' path)" 
-if ([string]::IsNullOrEmpty($localPath)) { $localPath = "C:\Repos\GitHub\Prophet21\P21.Rules.Visual\bin\app.publish\*" }
+if ([string]::IsNullOrEmpty($localPath)) { $localPath = "D:\Repos\GitHub\Prophet21\P21.Rules.Visual\bin\app.publish\*" }
 
 $remotePath = Read-Host "Enter Remote Path (Press Enter for default 'WebVisualRules' path)"
-if ([string]::IsNullOrEmpty($remotePath)) { $remotePath = "/COMPANYNAME/Shared/WebVisualRules/Play" }
+if ([string]::IsNullOrEmpty($remotePath)) { $remotePath = "/BehlerYoungFiles/Shared/WebVisualRules/Play" }
 
 # Create the SFTP Session
 $session = New-SFTPSession -HostName $sftpServer -Port $sftpPort -Credential (New-Object PSCredential ($sftpUser, $sftpPassword))

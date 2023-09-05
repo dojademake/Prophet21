@@ -16,36 +16,36 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="input-group">
-                <span id="lblController" class="input-group-addon">Controller:</span>
+            <div class="input-group mb-3">
+                <span id="lblController" class="input-group-text">Controller:</span>
                 <input class="form-control" type="text" name="ruleController" id="ruleController" value="Default" />
             </div>
 
-            <div class="input-group">
-                <span id="lblAction" class="input-group-addon">Action:</span>
+            <div class="input-group mb-3">
+                <span id="lblAction" class="input-group-text">Action:</span>
                 <input class="form-control" type="text" name="ruleAction" id="ruleAction" value="Index" />
             </div>
 
-            <div class="input-group">
-                <span id="rootVBRURL" class="input-group-addon">Root URL</span>
+            <div class="input-group mb-3">
+                <span id="rootVBRURL" class="input-group-text">Root URL</span>
                 <input class="form-control" type="text" name="vbrData" id="vbrData" value="@ViewBag.EncodedXml" />
             </div>
 
-            <div class="input-group">
-                <span id="lblUserName" class="input-group-addon">User:</span>
+            <div class="input-group mb-3">
+                <span id="lblUserName" class="input-group-text">User:</span>
                 <input class="form-control" type="text" name="txtUserName" id="txtUserName" />
-                <span id="lblPassword" class="input-group-addon">Password:</span>
+                <span id="lblPassword" class="input-group-text">Password:</span>
                 <input class="form-control" type="password" name="txtPassword" id="txtPassword" />
                 <input type="hidden" name="token" id="token" value="@ViewBag.Token" />
             </div>
-            <div class="input-group">
-                <span id="lblSOAURL" class="input-group-addon">API URL:</span>
+            <div class="input-group mb-3">
+                <span id="lblSOAURL" class="input-group-text">API URL:</span>
                 <input class="form-control" type="text" name="soaURL" id="soaURL" />
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Post &rarr;" class="btn btn-success pull-right" />
+                    <input type="submit" value="Post &rarr;" class="btn btn-success float-end" />
                 </div>
             </div>
         </div>
