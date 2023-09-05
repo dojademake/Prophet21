@@ -359,4 +359,6 @@ Epicor.P21.Popup.Model.dll
 P21.Extensions.dll
 Epicor.P21.Popup.Model.dll
 lib/assets/
+/deploy/NotTracked.ps1
 /P21.Rules.Visual/App_Data/*.xml
+*.lnk
