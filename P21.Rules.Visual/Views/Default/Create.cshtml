@@ -4,59 +4,189 @@
     ViewBag.Title = "Test Harness";
 }
 
-<h2>Visual Rule Test Harness</h2>
-<p>
-    This will allow you to send business rule data to the Sample Visual Rule as if it was triggered from the server.
-</p>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 
+<div class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px">
+    <div style="display: flex; flex-direction: column;">
+        <h1>Visual Rule Test Harness</h1>
+        <p>This will allow you to send business rule data to the Sample Visual Rule as if it was triggered from the server.</p>
+    </div>
+</div>
+
+<hr />
 <div class="row">
-    @using (Html.BeginForm())
-    {
+    <form name="vbrForm" id="vbrForm" method="post" target="_self">
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
             <h4>Execution Rule Activation</h4>
-            <p>Visual Rule URL</p>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-            <div class="input-group">
-                <span id="rootVBRURL" class="input-group-addon">Root URL</span>
-                <input class="form-control" type="text" name="action" id="action" value="Initialize?ruleController=Default&ruleAction=Index" />
-            </div>
-
-            <div class="input-group">
-                <span id="lblUserName" class="input-group-addon">User:</span>
-                <input class="form-control" type="text" name="txtUserName" id="txtUserName" value="@Model.Session.UserID" />
-                <span id="lblPassword" class="input-group-addon">Password:</span>
-                <input class="form-control" type="password" name="txtPassword" id="txtPassword" />
-            </div>
-            <div class="input-group">
-                <span id="lblSOAURL" class="input-group-addon">API URL:</span>
-                <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" value="@Model.RuleState.RulePageUrl" />
-            </div>
+            @if (ViewBag.BusinessRulesList != null)
+            {
+                <div class="input-group mb-3">
+                    @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
+                    @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+                </div>
+            }
 
 
-            <div class="form-group" style="padding-bottom: 10px; padding-top: 10px">
-                <div class="col-xs-12">
+            @if (Model != null)
+            {
+                <p>Visual Rule URL</p>
+                <div class="input-group mb-3">
+                    @if (ViewBag.rootVBRURL != null)
+                    {
+                        <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
+                    }
+                    <input class="form-control" type="text" name="action" id="action" style="min-width:480px;" value="@Model.RuleState.RulePageUrl.Replace(ViewBag.rootVBRURL,"")" />
+                </div>
+
+                <div class="input-group mb-3">
+                    <span id="lblUserName" class="input-group-text">User:</span>
+                    <input class="form-control" type="text" name="txtUserName" id="txtUserName" value="@Model.Session.UserID" />
+                    <span id="lblPassword" class="input-group-text">Password:</span>
+                    <input class="form-control" type="password" name="txtPassword" id="txtPassword" />
+                </div>
+
+                <div class="input-group mb-3">
+                    <span id="lblSOAURL" class="input-group-text">API URL:</span>
+                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@Model.RuleState.RulePageUrl" />
+                </div>
+
+                <div class="mb-3 pt-3">
                     <p>Data for Server Request</p>
-                    <textarea class="form-control" name="ruleRequest" id="ruleRequest" rows="8" style="width:100%">@Model.XmlData</textarea>
+                    <textarea name="ruleRequest" id="ruleRequest" rows="8" class="form-control" style="max-width:680px;">@Model.XmlData</textarea>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Start Execution &rarr;" class="btn btn-warning pull-right" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-warning pull-right" type="button" onclick="submitServerRequest()" title="Use JavaScript to get a token on the client side.">Start &raquo;</button>
+                        <input type="submit" value="Execution &raquo;" class="btn btn-warning float-end" title="Server-side retrieval of token." />
+                    </div>
                 </div>
-            </div>
+            }
         </div>
-    }
-</div>
-<div class="clearfix" style="height: 20px;"></div>  <!-- Spacer -->
-<div class="row">
-    @Html.ActionLink("Back to List", "Index")
+
+        <input type="hidden" name="vbrData" id="vbrData" />
+        <input type="hidden" name="token" id="token" />
+        <input type="hidden" name="soaURL" id="soaURL" />
+    </form>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        //************************************************************************************
+        //This initializes the test harness with mock server data and setups up the form.
+        //************************************************************************************
+        function init(element, eventName, eventHandler) {
+            //Wire up the test harness to listen for the post back from the Visual Rule
+            //in order to capture the response.
+            if (element.addEventListener) {
+                element.addEventListener(eventName, eventHandler, false);
+            }
+            else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+            $('#ruleRequest').format({ method: 'xml' });
+        }
+
+        //************************************************************************************
+        //This simulates posting a request to the Visual Rule form from the P21 Middleware Server.
+        //************************************************************************************
+        function submitServerRequest() {
+            var token;
+            var soaURL = $('#txtSOAURL').val();
+            // sanity check
+            if (!soaURL.endsWith('/')) {
+                soaURL += '/';
+            }
+            try {
+                var response = getToken();
+                if (!response || response === '' || response.toLowerCase().indexOf('resourceerror') > -1) {
+                    alert("Authentication Error: Token couldn't be retrieved from SOA");
+                    return;
+                }
+                response = JSON.parse(response);
+                token = response.AccessToken;
+            }
+            catch (err) {
+                alert("Error retreving token: " + err.message);
+                return;
+            }
+
+            //append the RootURL variable to the Action URL
+            //This maps area / rule
+            var action = '@ViewBag.rootVBRURL' + $('#action').val();
+
+            //get an instance to the form
+            $("form").attr("action", action);
+
+            var data = $("#ruleRequest").val();
+            data = btoa(data);
+
+            $('#vbrData').val(data);
+            $('#token').val(token);
+            $('#soaURL').val(soaURL);
+
+            //submit the form with the data to be used by the visual rule
+            $("form").submit();
+
+            //add some debug logic here if necessary
+            //window.status = action;
+
+            function getToken() {
+                var tokenUrl = soaURL + 'api/security/token/v2';
+                var user = $('#txtUserName').val();
+                var pass = $('#txtPassword').val();
+                var params = {
+                    UserName: user,
+                    Password: pass
+                };
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", tokenUrl, false);
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                xmlhttp.setRequestHeader("Accept", "application/json");
+                xmlhttp.send(JSON.stringify(params));
+                return xmlhttp.responseText;
+            }
+        }
+
+        //************************************************************************************
+        //This recieves the message back from the Visual Rule after it completes its process
+        //and calls the RedirectToAction("Close", "Initialize") in the controller.
+        //************************************************************************************
+        function ruleCompleted(e) {
+            //capture the returned XML from the Visual Rule Response
+            var responseData = JSON.parse(e.data)
+            var brXML = responseData.Xml;
+            brXML = atob(brXML);
+
+            //display the returned response from the visual rule and use JQuery to format the XML
+            document.getElementById("ruleResponse").value = brXML;
+            $('#ruleResponse').format({ method: 'xml' });
+
+            //advance the wizard
+            $("#wizard").steps("next");
+        }
+
+        //initializes the window and attach a message event to it.  This will
+        //get called when the Visual Rule's controller makes a call to
+        //RedirectToAction("Close", "Initialize", new { area = "" });
+        init(window, 'message', ruleCompleted);
+
+        $(document).ready(function () {
+
+            $('#RuleState_UID').on('change', function() {
+                var selectedId = $(this).val();
+                if (selectedId) {
+                    var baseUrl = '@Url.Action("Create", "Default", new { id = "" })';
+                    var newUrl = baseUrl + "/" + selectedId;
+                    window.location.href = newUrl;
+                }
+            });
+        });
+    </script>
 }

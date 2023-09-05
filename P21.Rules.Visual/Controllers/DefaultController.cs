@@ -1,21 +1,24 @@
-﻿using P21Custom.Entity.Services;
+﻿using Moq;
+using Newtonsoft.Json;
 using P21.Extensions.Web;
 using P21.Rules.Visual.Utilities;
+using P21Custom.Entity.Services;
+using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
-using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.IO;
-using System.Reflection;
-using System.Diagnostics;
-using P21Custom.Extensions.BusinessRule.BLL;
-using System.Web.Services.Description;
-using Unity.Resolution;
-using Unity;
+using System.Web.Routing;
 
 namespace P21.Rules.Visual.Controllers
 {
@@ -30,7 +33,6 @@ namespace P21.Rules.Visual.Controllers
             _service.CurrentRule = Rule;
         }
 
-
         public ActionResult About()
         {
             ViewBag.Message = "Web hosting and protocol values listed below.";
@@ -40,7 +42,6 @@ namespace P21.Rules.Visual.Controllers
 
         public ActionResult Contact(string id)
         {
-
             if (string.IsNullOrWhiteSpace(id))
             {
                 ViewBag.Message = "Resources and documentation.";
@@ -53,89 +54,93 @@ namespace P21.Rules.Visual.Controllers
             }
         }
 
-        public ActionResult Home()
-        {
-            return View();
-        }
-
-        // GET: Default
-        public ActionResult Index()
-        {
-            try
-            {
-                var result = _service.GetAllRules().ToList();
-                return View(result);
-
-            }
-            catch (Exception ex)
-            {
-                return HandleException(String.Empty, ex, _service.MaskedConnectionString);
-            }
-        }
-
-        // GET: Default/Details/5
-        public ActionResult Details()
-        {
-            return View(Rule);
-        }
-
         // GET: Default/Create
-        public ActionResult Create()
+        //[RequireHttps]
+        public ActionResult Create(string id)
         {
-            if (!Rule.IsInitialized())
-            {
-                string content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+            SetupTestControls();
 
-                if (content != null)
+            string content = string.Empty;
+
+            int uid;
+            if (int.TryParse(id, out uid))
+            {
+                content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+
+                if (content == null)
                 {
-                    SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
-                    Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+                    var busRule = _service.FindRule(uid);
+                    if (busRule != null)
+                    {
+                        content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                        if (content == null)
+                        {
+                            content = _service.GenerateXmlForRule(uid);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    content = FileUtility.ReadFileFromAppData($"{id}.xml");
                 }
                 else
                 {
-                    return View("Error", new HandleErrorInfo(new Exception("Error initializing Web Visual Rule"), "Default", "Create"));
+                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
                 }
             }
-            return View(Rule);
+
+            if (content != null)
+            {
+                SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
+                Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+            }
+            else
+            {
+                if (!Rule.IsInitialized())
+                {
+                    return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                }
+            }
+
+            if (Rule != null)
+            {
+                return View(Rule);
+            }
+            return View();
         }
 
         // POST: Default/Create
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                SetupTestControls();
+                if (ModelState.IsValid)
+                {
+                    if (!Rule.IsInitialized())
+                    {
+                        var token = await GetTokenAsync(collection["txtSOAURL"], collection["txtUserName"], collection["txtPassword"]);
+                        if (!token.ToLower().Contains("error"))
+                        {
+                            return InitializeRule(collection, token);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, $"Requesting a token resulted in the following message: '{token}'. Verify that your username, password, and the API URL are correct for the middleware in your environment.");
+                        }
+                    }
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return HandleException(String.Empty, ex, collection["txtSOAURL"]);
             }
-        }
-
-        // GET: Default/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Default/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index", "Initialize", new { ruleController = collection.GetKey(0), ruleAction = collection.GetValue("ruleAction") });
-            }
-            catch
-            {
-                return View();
-            }
+            return View(Rule);
         }
 
         // GET: Default/Delete/5
@@ -178,22 +183,7 @@ namespace P21.Rules.Visual.Controllers
 
             ViewBag.Subdirectories = subdirectories; // Pass the subdirectories to the view
 
-
             return View(versions);
-        }
-
-        private string GetFileVersion(string filePath)
-        {
-            try
-            {
-                var assembly = Assembly.LoadFile(filePath);
-                var version = assembly.GetName().Version;
-                return version.ToString();
-            }
-            catch (Exception ex)
-            {
-                return "Error: " + ex.Message;
-            }
         }
 
         // POST: Default/Delete/5
@@ -212,6 +202,106 @@ namespace P21.Rules.Visual.Controllers
             }
         }
 
+        // GET: Default/Details/5
+        public ActionResult Details()
+        {
+            return View(Rule);
+        }
+
+        // GET: Default/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: Default/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index", "Initialize", new { ruleController = collection.GetKey(0), ruleAction = collection.GetValue("ruleAction") });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Files(string id)
+        {
+            return Delete(id);
+        }
+        public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
+        {
+            var tokenUrl = soaURL + "api/security/token/v2";
+
+            var httpClient = new HttpClient();
+            var payload = new
+            {
+                UserName = userName,
+                Password = password
+            };
+            var jsonPayload = JsonConvert.SerializeObject(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync(tokenUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = await response.Content.ReadAsStringAsync();
+                return responseJson; // This will be your token
+            }
+            else
+            {
+                return "Error"; // Or handle the error appropriately
+            }
+        }
+
+        public ActionResult Home()
+        {
+            return View();
+        }
+
+        // GET: Default
+        public ActionResult Index()
+        {
+            try
+            {
+                var result = _service.GetAllRules().Where(br => br.rule_page_url != null).ToList();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(String.Empty, ex, _service.MaskedConnectionString);
+            }
+        }
+
+        public ActionResult List()
+        {
+            return View("Index");
+        }
+
+        public ActionResult Test(string id)
+        {
+            return Create(id);
+        }
+
+        private string GetFileVersion(string filePath)
+        {
+            try
+            {
+                var assembly = Assembly.LoadFile(filePath);
+                var version = assembly.GetName().Version;
+                return version.ToString();
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+        }
+
         private ActionResult HandleException(string key, Exception ex, string errorMessage)
         {
             if (!string.IsNullOrWhiteSpace(errorMessage))
@@ -223,7 +313,67 @@ namespace P21.Rules.Visual.Controllers
                 ModelState.AddModelError(key, ex);
                 ModelState.AddModelError(ex.GetType().Name, ex.Message);
             }
+
+            _logger.LogCritical(errorMessage, ex);
+
             return View();
+        }
+
+        private ActionResult InitializeRule(FormCollection collection, string token)
+        {
+            try
+            {
+                // Get ruleController and ruleAction values from the collection["action"] value
+                var actionUrl = new Uri($"{ViewBag.rootVBRURL}/{collection["action"]}", UriKind.RelativeOrAbsolute);
+                var queryParameters = HttpUtility.ParseQueryString(actionUrl.Query);
+                string ruleController = queryParameters["ruleController"];
+                string ruleAction = queryParameters["ruleAction"];
+
+                // Create a mock Request object and add form data to it
+                NameValueCollection form = new NameValueCollection
+                {
+                    ["vbrData"] = collection["vbrData"],
+                    ["token"] = token,
+                    ["soaURL"] = collection["soaURL"]
+                };
+
+                var mockRequest = new Mock<HttpRequestBase>();
+                mockRequest.Setup(r => r.Form).Returns(form);
+                var mockHttpContext = new Mock<HttpContextBase>();
+                mockHttpContext.Setup(c => c.Request).Returns(mockRequest.Object);
+
+                // Create an instance of the target controller
+                InitializeController targetController = new InitializeController();
+
+                // Set its ControllerContext
+                targetController.ControllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), targetController);
+
+                // Execute the target action method
+                ActionResult result = targetController.Index(ruleController, ruleAction);
+
+                // Handle the result, e.g., by redirecting to another action
+                return RedirectToAction(ruleAction, ruleController);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(String.Empty, ex, collection["action"]);
+            }
+        }
+
+        private void SetupTestControls()
+        {
+            try
+            {
+                Uri uri = Request.Url;
+                ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
+
+                ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.rootVBRURL = ex.ToString();
+                ViewBag.BusinessRulesList = new SelectList(new List<string> { ex.Message });
+            }
         }
     }
 }

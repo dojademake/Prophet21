@@ -16,20 +16,24 @@ namespace P21.Rules.Visual.Utilities
             // Combine the folder path and the file name to get the full path
             string fullPath = Path.Combine(appDataPath, fileName);
 
-            try
+            if (File.Exists(fullPath))
             {
-                // Read the content of the file
-                using (StreamReader reader = new StreamReader(fullPath))
+                try
                 {
-                    return reader.ReadToEnd();
+                    // Read the content of the file
+                    using (StreamReader reader = new StreamReader(fullPath))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions here
+                    Console.WriteLine(ex.Message);
+                    return null;
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle exceptions here
-                Console.WriteLine(ex.Message);
-                return null;
-            }
+            else { return null; }
         }
     }
 }

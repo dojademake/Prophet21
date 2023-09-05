@@ -150,8 +150,14 @@ namespace P21Custom.Entity.Database
 
             modelBuilder.Entity<business_rule>()
                 .HasRequired(br => br.rule_type)
-                .WithMany(cp => cp.business_rules)
+                .WithMany(cp => cp.business_rule_types)
                 .HasForeignKey(br => br.rule_type_cd)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<business_rule>()
+                .HasRequired(br => br.run_type)
+                .WithMany(cp => cp.business_rule_runs)
+                .HasForeignKey(br => br.run_type_cd)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<business_rule_data_element>()
