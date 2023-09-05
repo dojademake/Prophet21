@@ -40,7 +40,7 @@
                     {
                         <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
                     }
-                    <input class="form-control" type="text" name="action" id="action" style="max-width:480px;" value="@Model.RuleState.RulePageUrl" />  @*Initialize?ruleController=Default&ruleAction=Details" />*@
+                    <input class="form-control" type="text" name="action" id="action" style="min-width:480px;" value="@Model.RuleState.RulePageUrl.Replace(ViewBag.rootVBRURL,"")" />
                 </div>
 
                 <div class="input-group mb-3">
@@ -178,6 +178,18 @@
         //get called when the Visual Rule's controller makes a call to
         //RedirectToAction("Close", "Initialize", new { area = "" });
         init(window, 'message', ruleCompleted);
-    </script>
 
+        $(document).ready(function () {
+
+            $('#RuleState_UID').on('change', function() {
+                var selectedId = $(this).val();
+                alert(selectedId);
+                if (selectedId) {
+                    var baseUrl = '@Url.Action("Create", "Default")';
+                    var newUrl = baseUrl + "/" + selectedId;
+                    window.location.href = newUrl;
+                }
+            });
+        });
+    </script>
 }
