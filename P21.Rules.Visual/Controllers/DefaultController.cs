@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -59,40 +60,51 @@ namespace P21.Rules.Visual.Controllers
         {
             SetupTestControls();
 
-            if (!Rule.IsInitialized())
+            string content = string.Empty;
+
+            int uid;
+            if (int.TryParse(id, out uid))
             {
-                string content = string.Empty;
+                content = FileUtility.ReadFileFromAppData($"{uid}.xml");
 
-                int uid;
-                if (int.TryParse(id, out uid))
+                if (content == null)
                 {
-                    content = FileUtility.ReadFileFromAppData($"{uid}.xml");
-
-                    if (content == null)
+                    var busRule = _service.FindRule(uid);
+                    if (busRule != null)
                     {
-                        var busRule = _service.FindRule(uid);
-                        if (busRule != null)
+                        content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                        if (content == null)
                         {
-                            content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                            content = _service.GenerateXmlForRule(uid);
                         }
                     }
                 }
-
-                if (string.IsNullOrEmpty(content))
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(id))
                 {
-                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
-                }
-
-                if (content != null)
-                {
-                    SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
-                    Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+                    content = FileUtility.ReadFileFromAppData($"{id}.xml");
                 }
                 else
                 {
-                    return View("Error", new HandleErrorInfo(new Exception("Error initializing Web Visual Rule"), "Default", "Create"));
+                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
                 }
             }
+
+            if (content != null)
+            {
+                SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
+                Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+            }
+            else
+            {
+                if (!Rule.IsInitialized())
+                {
+                    return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                }
+            }
+
             if (Rule != null)
             {
                 return View(Rule);
@@ -119,7 +131,7 @@ namespace P21.Rules.Visual.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError(string.Empty, $"Requesting token resulted in '{token}' message.");
+                            ModelState.AddModelError(string.Empty, $"Requesting a token resulted in the following message: '{token}'. Verify that your username, password, and the API URL are correct for the middleware in your environment.");
                         }
                     }
                 }
@@ -196,11 +208,6 @@ namespace P21.Rules.Visual.Controllers
             return View(Rule);
         }
 
-        public ActionResult Directory(string id)
-        {
-            return Delete(id);
-        }
-
         // GET: Default/Edit/5
         public ActionResult Edit(int id)
         {
@@ -223,6 +230,10 @@ namespace P21.Rules.Visual.Controllers
             }
         }
 
+        public ActionResult Files(string id)
+        {
+            return Delete(id);
+        }
         public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
         {
             var tokenUrl = soaURL + "api/security/token/v2";
@@ -302,6 +313,9 @@ namespace P21.Rules.Visual.Controllers
                 ModelState.AddModelError(key, ex);
                 ModelState.AddModelError(ex.GetType().Name, ex.Message);
             }
+
+            _logger.LogCritical(errorMessage, ex);
+
             return View();
         }
 

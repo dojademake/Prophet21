@@ -31,7 +31,6 @@
             }
 
 
-
             @if (Model != null)
             {
                 <p>Visual Rule URL</p>
@@ -63,7 +62,6 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button class="btn btn-warning pull-right" type="button" onclick="submitServerRequest()" title="Use JavaScript to get a token on the client side.">Start &raquo;</button>
-                        @*<button class="btn btn-warning float-end" type="button" value="Submit" onclick="submitServerRequest()">Start Execution &raquo;</button>*@
                         <input type="submit" value="Execution &raquo;" class="btn btn-warning float-end" title="Server-side retrieval of token." />
                     </div>
                 </div>
@@ -183,9 +181,8 @@
 
             $('#RuleState_UID').on('change', function() {
                 var selectedId = $(this).val();
-                alert(selectedId);
                 if (selectedId) {
-                    var baseUrl = '@Url.Action("Create", "Default")';
+                    var baseUrl = '@Url.Action("Create", "Default", new { id = "" })';
                     var newUrl = baseUrl + "/" + selectedId;
                     window.location.href = newUrl;
                 }
