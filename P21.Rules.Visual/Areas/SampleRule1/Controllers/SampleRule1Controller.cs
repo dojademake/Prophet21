@@ -103,7 +103,7 @@ namespace P21.Rules.Visual.Areas.SampleRule1.Controllers
                 return RedirectToAction("Close", "Initialize", new { area = "" });
             }
             catch (Exception ex)
-            {
+        {
                 //catch the error and send it to the Error view with the HandleErrorInfo
                 return View("Error", new HandleErrorInfo(ex, "SampleRule1", "FormView"));
             }
@@ -114,13 +114,15 @@ namespace P21.Rules.Visual.Areas.SampleRule1.Controllers
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Return()
-        {
-            Rule.RuleResult.Success = true;
+		[HttpPost]
+		public ActionResult Return()
+		{
+			Rule.RuleResult.Success = true;
 
-            return RedirectToAction("Close", "Initialize", new { area = "" });
-        }
+			//IMPORTANT - This is what returns the Visual Rule control back to the server
+			//DO NOT REMOVE
+			return RedirectToAction("Close", "Initialize", new { area = "" });
+		}
 
         public ActionResult RuleView() => View(Rule);
 

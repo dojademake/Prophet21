@@ -248,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\SampleRule1\Data\" />
+    <Folder Include="Areas\SampleRule1\Views\SampleRule1\" />
     <Folder Include="Areas\SampleRule1\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
