@@ -25,11 +25,19 @@
             @if (ViewBag.BusinessRulesList != null)
             {
                 <div class="input-group mb-3">
-                    @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
-                    @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+                    @try
+                    {
+                        @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
+                        @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+                    }
+                    catch (Exception ex)
+                    {
+                        <div class="alert alert-danger">
+                            An error occurred while processing your request. Please try again later. @ex.Message
+                        </div>
+                    }
                 </div>
             }
-
 
             @if (Model != null)
             {

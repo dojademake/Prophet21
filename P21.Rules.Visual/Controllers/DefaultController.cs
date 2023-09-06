@@ -58,56 +58,63 @@ namespace P21.Rules.Visual.Controllers
         //[RequireHttps]
         public ActionResult Create(string id)
         {
-            SetupTestControls();
-
-            string content = string.Empty;
-
-            int uid;
-            if (int.TryParse(id, out uid))
+            try
             {
-                content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+                SetupTestControls();
 
-                if (content == null)
+                string content = string.Empty;
+
+                int uid;
+                if (int.TryParse(id, out uid))
                 {
-                    var busRule = _service.FindRule(uid);
-                    if (busRule != null)
+                    content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+
+                    if (content == null)
                     {
-                        content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
-                        if (content == null)
+                        var busRule = _service.FindRule(uid);
+                        if (busRule != null)
                         {
-                            content = _service.GenerateXmlForRule(uid);
+                            content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                            if (content == null)
+                            {
+                                content = _service.GenerateXmlForRule(uid);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(id))
+                else
                 {
-                    content = FileUtility.ReadFileFromAppData($"{id}.xml");
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        content = FileUtility.ReadFileFromAppData($"{id}.xml");
+                    }
+                    else
+                    {
+                        content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                    }
+                }
+
+                if (content != null)
+                {
+                    SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
+                    Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
                 }
                 else
                 {
-                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                    if (!Rule.IsInitialized())
+                    {
+                        return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                    }
                 }
-            }
 
-            if (content != null)
-            {
-                SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
-                Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
-            }
-            else
-            {
-                if (!Rule.IsInitialized())
+                if (Rule != null)
                 {
-                    return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                    return View(Rule);
                 }
             }
-
-            if (Rule != null)
+            catch (Exception ex)
             {
-                return View(Rule);
+                return HandleException(String.Empty, ex, id);
             }
             return View();
         }
