@@ -1,13 +1,7 @@
 ﻿using P21.Rules.Visual.Utilities;
 using P21Custom.Entity.Database;
-using P21Custom.Entity.Services;
 using P21Custom.Extensions.BusinessRule.BLL;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Diagnostics;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;

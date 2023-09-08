@@ -20,8 +20,10 @@ namespace P21.Rules.Visual.Utilities
             get { return _isInitialized; }
             set { _isInitialized = value; }
         }
+
         public Rule RuleToLog => _ruleToLog;
         public LogLevel Threshold => _theshold;
+
         public void LogCritical(string criticalMessage, Exception exception)
         {
             LogMessage(LogLevel.Critical, criticalMessage, exception);
@@ -37,9 +39,15 @@ namespace P21.Rules.Visual.Utilities
             LogMessage(LogLevel.Error, errorMessage);
         }
 
+        public abstract void LogMessage(P21Custom.Extensions.LogLevel level, string message, Exception exception);
+
         public void LogWarning(string warningMessage)
         {
             LogMessage(LogLevel.Warning, warningMessage);
+        }
+
+        public void SetLoggerName(string nameOfLog)
+        {
         }
 
         public IRuleLogger Setup(Configuration appConfiguration)
@@ -48,14 +56,7 @@ namespace P21.Rules.Visual.Utilities
             Initialized = true;
             return this;
         }
-        public void SetLoggerName(string nameOfLog)
-        {
-
-        }
-
         private void LogMessage(LogLevel level, string message)
         { LogMessage(level, message, null); }
-
-        public abstract void LogMessage(P21Custom.Extensions.LogLevel level, string message, Exception exception);
     }
 }
