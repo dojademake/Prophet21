@@ -1,11 +1,10 @@
 ﻿using P21.Extensions.BusinessRule;
-using P21Custom.Extensions;
 using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Configuration;
 using System.Reflection;
 
-namespace P21.Rules.Visual.Utilities
+namespace P21Custom.Extensions.BusinessRule
 {
     public abstract class RuleLogger : IRuleLogger
     {

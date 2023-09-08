@@ -2,7 +2,7 @@
 using System;
 using System.Configuration;
 
-namespace P21Custom.Extensions.BusinessRule.BLL
+namespace P21Custom.Extensions.BusinessRule
 {
     public interface IRuleLogger
     {

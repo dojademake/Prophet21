@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using P21.Extensions.Web;
 using P21.Rules.Visual.Utilities;
 using P21Custom.Entity.Services;
-using P21Custom.Extensions.BusinessRule.BLL;
+using P21Custom.Extensions.BusinessRule;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -14,7 +14,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -96,27 +95,27 @@ namespace P21.Rules.Visual.Controllers
                     }
                 }
 
-            if (content != null)
-            {
-                SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
-                Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
-                //if (Rule.IsInitialized())
+                if (content != null)
                 {
-                    Uri rulePage = new Uri(Rule.RuleState.RulePageUrl);
-                    if (rulePage != null)
+                    SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
+                    Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+                    //if (Rule.IsInitialized())
                     {
-                        ViewBag.Action = GetInitializePath(rulePage);
-                        ViewBag.SoaUrl = GetSchemeHostAndPort(rulePage);
+                        Uri rulePage = new Uri(Rule.RuleState.RulePageUrl);
+                        if (rulePage != null)
+                        {
+                            ViewBag.Action = GetInitializePath(rulePage);
+                            ViewBag.SoaUrl = GetSchemeHostAndPort(rulePage);
+                        }
                     }
                 }
-            }
-            else
-            {
-                if (!Rule.IsInitialized())
+                else
                 {
-                    return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                    if (!Rule.IsInitialized())
+                    {
+                        return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                    }
                 }
-            }
 
                 if (Rule != null)
                 {
@@ -282,6 +281,7 @@ namespace P21.Rules.Visual.Controllers
         {
             return Delete(id);
         }
+
         public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
         {
             var tokenUrl = soaURL + "api/security/token/v2";
