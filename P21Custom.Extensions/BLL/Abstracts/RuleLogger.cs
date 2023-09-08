@@ -1,5 +1,4 @@
 ﻿using P21.Extensions.BusinessRule;
-using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Configuration;
 using System.Reflection;
@@ -8,11 +7,10 @@ namespace P21Custom.Extensions.BusinessRule
 {
     public abstract class RuleLogger : IRuleLogger
     {
-        private readonly Rule _ruleToLog;
         private readonly LogLevel _theshold;
         private bool _isInitialized;
         private string _loggerName;
-
+        private Rule _ruleToLog;
         public RuleLogger()
         { _loggerName = Assembly.GetExecutingAssembly().FullName; }
 
@@ -26,8 +24,8 @@ namespace P21Custom.Extensions.BusinessRule
         }
 
         public Rule RuleToLog => _ruleToLog;
+        Rule IRuleLogger.RuleToLog { get => _ruleToLog; set { _ruleToLog = value; } }
         public LogLevel Threshold => _theshold;
-
         public void LogCritical(string criticalMessage, Exception exception)
         {
             LogMessage(LogLevel.Critical, criticalMessage, exception);

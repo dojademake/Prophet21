@@ -7,7 +7,7 @@ namespace P21Custom.Extensions.BusinessRule
     public interface IRuleLogger
     {
         bool Initialized { get; set; }
-        Rule RuleToLog { get; }
+        Rule RuleToLog { get; set; }
         LogLevel Threshold { get; }
 
         void LogCritical(string criticalMessage, Exception exception);

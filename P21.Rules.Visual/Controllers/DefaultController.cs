@@ -30,6 +30,7 @@ namespace P21.Rules.Visual.Controllers
         public DefaultController(IRuleLogger logger)
         {
             _logger = logger;
+            _logger.RuleToLog = Rule;
             _service.CurrentRule = Rule;
         }
 
