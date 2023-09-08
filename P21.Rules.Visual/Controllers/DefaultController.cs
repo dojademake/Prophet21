@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -97,6 +98,15 @@ namespace P21.Rules.Visual.Controllers
             {
                 SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
                 Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+                //if (Rule.IsInitialized())
+                {
+                    Uri rulePage = new Uri(Rule.RuleState.RulePageUrl);
+                    if (rulePage != null)
+                    {
+                        ViewBag.Action = GetInitializePath(rulePage);
+                        ViewBag.SoaUrl = GetSchemeHostAndPort(rulePage);
+                    }
+                }
             }
             else
             {
@@ -111,6 +121,36 @@ namespace P21.Rules.Visual.Controllers
                 return View(Rule);
             }
             return View();
+        }
+
+        private static string GetInitializePath(Uri rulePage)
+        {
+            // Get the segments from the Uri.
+            string[] segments = rulePage.Segments;
+
+            // Find the segment "Initialize" and take everything from there.
+            string result = "";
+            bool startAdding = false;
+            foreach (string segment in segments)
+            {
+                if (segment.Trim('/').Equals("Initialize", StringComparison.OrdinalIgnoreCase))
+                {
+                    startAdding = true;
+                }
+
+                if (startAdding)
+                {
+                    result += segment;
+                }
+            }
+
+            // Append the query string if it exists
+            if (!String.IsNullOrEmpty(rulePage.Query))
+            {
+                result += rulePage.Query;
+            }
+
+            return result;
         }
 
         // POST: Default/Create
@@ -366,7 +406,7 @@ namespace P21.Rules.Visual.Controllers
             try
             {
                 Uri uri = Request.Url;
-                ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
+                ViewBag.rootVBRURL = GetSchemeHostAndPort(uri);
 
                 ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
             }
@@ -375,6 +415,11 @@ namespace P21.Rules.Visual.Controllers
                 ViewBag.rootVBRURL = ex.ToString();
                 ViewBag.BusinessRulesList = new SelectList(new List<string> { ex.Message });
             }
+        }
+
+        private static string GetSchemeHostAndPort(Uri uri)
+        {
+            return $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
         }
     }
 }

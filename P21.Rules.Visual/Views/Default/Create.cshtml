@@ -39,7 +39,7 @@
                     {
                         <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
                     }
-                    <input class="form-control" type="text" name="action" id="action" style="min-width:480px;" value="@Model.RuleState.RulePageUrl.Replace(ViewBag.rootVBRURL,"")" />
+                    <input class="form-control" type="text" name="action" id="action" style="min-width:480px;" value="@ViewBag.Action" />
                 </div>
 
                 <div class="input-group mb-3">
@@ -51,7 +51,7 @@
 
                 <div class="input-group mb-3">
                     <span id="lblSOAURL" class="input-group-text">API URL:</span>
-                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@Model.RuleState.RulePageUrl" />
+                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@ViewBag.SoaUrl" />
                 </div>
 
                 <div class="mb-3 pt-3">
