@@ -36,6 +36,7 @@ namespace P21.Rules.Visual.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Web hosting and protocol values listed below.";
+            _logger.LogDebug(ViewBag.Message);
 
             return View();
         }

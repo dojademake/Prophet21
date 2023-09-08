@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace P21Custom.Extensions
 {
-	public abstract class BaseRule : Rule, IDisposable
+	public class BaseRule : Rule, IDisposable
 	{
 		private LogicLayer _logic;
 		private LogLevel _logLevel;
@@ -196,11 +196,21 @@ namespace P21Custom.Extensions
 			}
 		}
 
-		// // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-		// ~BaseRule()
-		// {
-		//     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-		//     Dispose(disposing: false);
-		// }
-	}
+        public override string GetDescription()
+        {
+            throw new MethodAccessException("Get the description at the rule inheriting from this BaseRule.");
+        }
+
+        public override RuleResult Execute()
+        {
+            throw new InvalidOperationException("Cannot execute a base rule. Please execute this method in the class inheriting from BaseRule.");
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~BaseRule()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+    }
 }

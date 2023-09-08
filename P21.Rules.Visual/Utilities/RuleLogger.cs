@@ -1,25 +1,26 @@
-﻿using P21Custom.Extensions;
+﻿using P21.Extensions.BusinessRule;
+using P21Custom.Extensions;
 using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Configuration;
 
 namespace P21.Rules.Visual.Utilities
 {
-    public class RuleLogger : IRuleLogger
+    public abstract class RuleLogger : IRuleLogger
     {
-        //private readonly BaseRule _ruleToLog;
+        private readonly Rule _ruleToLog;
         private readonly LogLevel _theshold;
         private bool _isInitialized;
 
-        public RuleLogger()
-        { }
+        public RuleLogger(Rule rule)
+        { _ruleToLog = rule; }
 
         public bool Initialized
         {
             get { return _isInitialized; }
             set { _isInitialized = value; }
         }
-        //public BaseRule RuleToLog => _ruleToLog;
+        public Rule RuleToLog => _ruleToLog;
         public LogLevel Threshold => _theshold;
         public void LogCritical(string criticalMessage, Exception exception)
         {
@@ -55,27 +56,6 @@ namespace P21.Rules.Visual.Utilities
         private void LogMessage(LogLevel level, string message)
         { LogMessage(level, message, null); }
 
-        private void LogMessage(LogLevel level, string message, Exception exception)
-        {
-            if (level > LogLevel.Unknown)
-            {
-                message = $"{level}: {message}";
-            }
-            //if (RuleToLog != null)
-            //{
-            //    if (!string.IsNullOrWhiteSpace(message))
-            //    {
-            //        RuleToLog.Log.AddAndPersist(message);
-            //    }
-            //    if (exception != null)
-            //    {
-            //        RuleToLog.Log.AddAndPersist(exception.ToString());
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine(message);
-            //}
-        }
+        public abstract void LogMessage(P21Custom.Extensions.LogLevel level, string message, Exception exception);
     }
 }

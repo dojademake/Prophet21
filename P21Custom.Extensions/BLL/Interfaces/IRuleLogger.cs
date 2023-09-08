@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P21.Extensions.BusinessRule;
+using System;
 using System.Configuration;
 
 namespace P21Custom.Extensions.BusinessRule.BLL
@@ -6,7 +7,7 @@ namespace P21Custom.Extensions.BusinessRule.BLL
     public interface IRuleLogger
     {
         bool Initialized { get; set; }
-        //BaseRule RuleToLog { get; }
+        Rule RuleToLog { get; }
         LogLevel Threshold { get; }
 
         void LogCritical(string criticalMessage, Exception exception);

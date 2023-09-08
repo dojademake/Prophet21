@@ -38,7 +38,7 @@ namespace P21.Rules.Visual
             var container = new UnityContainer();
 
             // Register the custom logger implementation
-            container.RegisterType<IRuleLogger, RuleLogger>();
+            container.RegisterType<IRuleLogger, DebugRuleLogger>();
 
             // Set the Unity dependency resolver
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
