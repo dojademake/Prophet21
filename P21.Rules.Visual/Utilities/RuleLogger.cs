@@ -3,6 +3,7 @@ using P21Custom.Extensions;
 using P21Custom.Extensions.BusinessRule.BLL;
 using System;
 using System.Configuration;
+using System.Reflection;
 
 namespace P21.Rules.Visual.Utilities
 {
@@ -11,8 +12,12 @@ namespace P21.Rules.Visual.Utilities
         private readonly Rule _ruleToLog;
         private readonly LogLevel _theshold;
         private bool _isInitialized;
+        private string _loggerName;
 
-        public RuleLogger(Rule rule)
+        public RuleLogger()
+        { _loggerName = Assembly.GetExecutingAssembly().FullName; }
+
+        public RuleLogger(Rule rule) : this()
         { _ruleToLog = rule; }
 
         public bool Initialized
@@ -48,6 +53,7 @@ namespace P21.Rules.Visual.Utilities
 
         public void SetLoggerName(string nameOfLog)
         {
+            _loggerName = nameOfLog;
         }
 
         public IRuleLogger Setup(Configuration appConfiguration)
@@ -56,6 +62,7 @@ namespace P21.Rules.Visual.Utilities
             Initialized = true;
             return this;
         }
+
         private void LogMessage(LogLevel level, string message)
         { LogMessage(level, message, null); }
     }

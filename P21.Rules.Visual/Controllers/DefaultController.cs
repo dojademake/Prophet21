@@ -60,39 +60,41 @@ namespace P21.Rules.Visual.Controllers
         //[RequireHttps]
         public ActionResult Create(string id)
         {
-            SetupTestControls();
-
-            string content = string.Empty;
-
-            int uid;
-            if (int.TryParse(id, out uid))
+            try
             {
-                content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+                SetupTestControls();
 
-                if (content == null)
+                string content = string.Empty;
+
+                int uid;
+                if (int.TryParse(id, out uid))
                 {
-                    var busRule = _service.FindRule(uid);
-                    if (busRule != null)
+                    content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+
+                    if (content == null)
                     {
-                        content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
-                        if (content == null)
+                        var busRule = _service.FindRule(uid);
+                        if (busRule != null)
                         {
-                            content = _service.GenerateXmlForRule(uid);
+                            content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                            if (content == null)
+                            {
+                                content = _service.GenerateXmlForRule(uid);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    content = FileUtility.ReadFileFromAppData($"{id}.xml");
-                }
                 else
                 {
-                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        content = FileUtility.ReadFileFromAppData($"{id}.xml");
+                    }
+                    else
+                    {
+                        content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                    }
                 }
-            }
 
             if (content != null)
             {
@@ -116,9 +118,14 @@ namespace P21.Rules.Visual.Controllers
                 }
             }
 
-            if (Rule != null)
+                if (Rule != null)
+                {
+                    return View(Rule);
+                }
+            }
+            catch (Exception ex)
             {
-                return View(Rule);
+                return HandleException(String.Empty, ex, id);
             }
             return View();
         }
