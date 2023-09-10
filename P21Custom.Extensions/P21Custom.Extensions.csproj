@@ -49,6 +49,8 @@
     <Compile Include="BaseRule.cs" />
     <Compile Include="BLL\Abstracts\RuleLogger.cs" />
     <Compile Include="BLL\Implementations\PersistRuleLogger.cs" />
+    <Compile Include="BLL\Interfaces\EventId.cs" />
+    <Compile Include="BLL\Interfaces\NotNullWhenAttribute.cs" />
     <Compile Include="BLL\LogicLayer.cs" />
     <Compile Include="Models\DomainException.cs" />
     <Compile Include="Models\Enumerations\LogLevel.cs" />
