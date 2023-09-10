@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace P21.Rules.Visual.Utilities
 {
-    public class DebugRuleLogger : RuleLogger
+    public class DebugRuleLogger : RuleLogger<DebugRuleLogger>
     {
         private readonly BaseRule _ruleToLog;
 

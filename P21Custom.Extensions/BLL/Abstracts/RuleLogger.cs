@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace P21Custom.Extensions.BusinessRule
 {
-    public abstract class RuleLogger : IRuleLogger
+    public abstract class RuleLogger<TCategoryName> : IRuleLogger<TCategoryName>
     {
         private readonly LogLevel _theshold;
         private bool _isInitialized;
         private string _loggerName;
         private Rule _ruleToLog;
         public RuleLogger()
-        { _loggerName = Assembly.GetExecutingAssembly().FullName; }
+        { this.DeclaringType = typeof(TCategoryName); }
 
         public RuleLogger(Rule rule) : this()
         { _ruleToLog = rule; }
@@ -26,6 +26,9 @@ namespace P21Custom.Extensions.BusinessRule
         public Rule RuleToLog => _ruleToLog;
         Rule IRuleLogger.RuleToLog { get => _ruleToLog; set { _ruleToLog = value; } }
         public LogLevel Threshold => _theshold;
+
+        public Type DeclaringType { get; private set; }
+
         public void LogCritical(string criticalMessage, Exception exception)
         {
             LogMessage(LogLevel.Critical, criticalMessage, exception);
@@ -63,19 +66,19 @@ namespace P21Custom.Extensions.BusinessRule
         private void LogMessage(LogLevel level, string message)
         { LogMessage(level, message, null); }
 
-        //public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public IDisposable BeginScope<TState>(TState state) where TState : class
+        {
+            return null;
+        }
 
-        //public bool IsEnabled(LogLevel logLevel)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public void Log(string message)
+        {
+            throw new NotImplementedException();
+        }
 
-        //public IDisposable BeginScope<TState>(TState state) where TState : class
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public void Log(LogLevel level, string message, Exception exception)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
