@@ -1,12 +1,5 @@
-﻿using P21Custom.Extensions.BusinessRule;
-using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace P21Custom.Extensions.BusinessRule
 {
@@ -17,8 +10,6 @@ namespace P21Custom.Extensions.BusinessRule
     public class PersistRuleLogger : RuleLogger<PersistRuleLogger>
     {
         public string FileName => RuleToLog.Log.Name;
-
-        //public P21.Extensions.BusinessRule.Rule RuleToLog { get; private set; }
 
         public override void LogMessage(LogLevel level, string message, Exception exception)
         {
@@ -37,7 +28,7 @@ namespace P21Custom.Extensions.BusinessRule
             }
             else
             {
-                Debug.WriteLine($"{MethodBase.GetCurrentMethod().DeclaringType.FullName} does not have a Rule.");
+                Debug.WriteLine($"The rule for {DeclaringType.FullName} has not been initiated and thus will not be written to a file in the logs directory.");
                 Debug.WriteLine(errorMessage);
             }
         }

@@ -7,13 +7,6 @@ namespace P21.Rules.Visual.Utilities
 {
     public class DebugRuleLogger : RuleLogger<DebugRuleLogger>
     {
-        private readonly BaseRule _ruleToLog;
-
-        public DebugRuleLogger(BaseRule rule) : base(rule)
-        {
-            _ruleToLog = rule;
-        }
-
         public override void LogMessage(LogLevel level, string message, Exception exception)
         {
             string errorMessage = $"{level}: {message} {Environment.NewLine}";
@@ -21,6 +14,11 @@ namespace P21.Rules.Visual.Utilities
             {
                 errorMessage += exception.ToString();
             }
+            if (RuleToLog != null)
+            {
+                errorMessage += RuleToLog.XmlData;
+            }
+
             Debug.WriteLine(errorMessage);
         }
     }

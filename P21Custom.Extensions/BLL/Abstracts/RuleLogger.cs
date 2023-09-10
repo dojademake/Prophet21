@@ -1,7 +1,6 @@
 ﻿using P21.Extensions.BusinessRule;
 using System;
 using System.Configuration;
-using System.Reflection;
 
 namespace P21Custom.Extensions.BusinessRule
 {
@@ -11,11 +10,17 @@ namespace P21Custom.Extensions.BusinessRule
         private bool _isInitialized;
         private string _loggerName;
         private Rule _ruleToLog;
+
         public RuleLogger()
-        { this.DeclaringType = typeof(TCategoryName); }
+        {
+            this.DeclaringType = typeof(TCategoryName);
+            _loggerName = DeclaringType.Name;
+        }
 
         public RuleLogger(Rule rule) : this()
         { _ruleToLog = rule; }
+
+        public Type DeclaringType { get; private set; }
 
         public bool Initialized
         {
@@ -27,7 +32,21 @@ namespace P21Custom.Extensions.BusinessRule
         Rule IRuleLogger.RuleToLog { get => _ruleToLog; set { _ruleToLog = value; } }
         public LogLevel Threshold => _theshold;
 
-        public Type DeclaringType { get; private set; }
+        public IDisposable BeginScope<TState>(TState state) where TState : class
+        {
+            return null;
+        }
+
+        public void Log(string message)
+        {
+            //TODO: include a setting if unknown levels should be recorded.
+            LogMessage(LogLevel.Unknown, message, null);
+        }
+
+        public void Log(LogLevel level, string message, Exception exception)
+        {
+            LogMessage(level, message, exception);
+        }
 
         public void LogCritical(string criticalMessage, Exception exception)
         {
@@ -65,20 +84,5 @@ namespace P21Custom.Extensions.BusinessRule
 
         private void LogMessage(LogLevel level, string message)
         { LogMessage(level, message, null); }
-
-        public IDisposable BeginScope<TState>(TState state) where TState : class
-        {
-            return null;
-        }
-
-        public void Log(string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Log(LogLevel level, string message, Exception exception)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
