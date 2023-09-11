@@ -25,11 +25,19 @@
             @if (ViewBag.BusinessRulesList != null)
             {
                 <div class="input-group mb-3">
-                    @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
-                    @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+                    @try
+                    {
+                        @Html.LabelFor(m => m.RuleState.UID, new { @class = "input-group-text" })
+                        @Html.DropDownListFor(m => m.RuleState.UID, (SelectList)ViewBag.BusinessRulesList, "Select a Business Rule", new { @class = "form-control", @style = "max-width: 680px;" })
+                    }
+                    catch (Exception ex)
+                    {
+                        <div class="alert alert-danger">
+                            An error occurred while processing your request. Please try again later. @ex.Message
+                        </div>
+                    }
                 </div>
             }
-
 
             @if (Model != null)
             {
@@ -39,7 +47,7 @@
                     {
                         <span id="rootVBRURL" class="input-group-text">@ViewBag.rootVBRURL</span>
                     }
-                    <input class="form-control" type="text" name="action" id="action" style="min-width:480px;" value="@Model.RuleState.RulePageUrl.Replace(ViewBag.rootVBRURL,"")" />
+                    <input class="form-control" type="text" name="action" id="action" style="min-width:480px;" value="@ViewBag.Action" />
                 </div>
 
                 <div class="input-group mb-3">
@@ -51,7 +59,7 @@
 
                 <div class="input-group mb-3">
                     <span id="lblSOAURL" class="input-group-text">API URL:</span>
-                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@Model.RuleState.RulePageUrl" />
+                    <input class="form-control" type="text" name="txtSOAURL" id="txtSOAURL" style="max-width:600px;" value="@ViewBag.SoaUrl" />
                 </div>
 
                 <div class="mb-3 pt-3">

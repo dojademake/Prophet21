@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using P21.Extensions.Web;
 using P21.Rules.Visual.Utilities;
 using P21Custom.Entity.Services;
-using P21Custom.Extensions.BusinessRule.BLL;
+using P21Custom.Extensions.BusinessRule;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -30,12 +30,14 @@ namespace P21.Rules.Visual.Controllers
         public DefaultController(IRuleLogger logger)
         {
             _logger = logger;
+            _logger.RuleToLog = Rule;
             _service.CurrentRule = Rule;
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Web hosting and protocol values listed below.";
+            _logger.LogDebug(ViewBag.Message);
 
             return View();
         }
@@ -58,58 +60,104 @@ namespace P21.Rules.Visual.Controllers
         //[RequireHttps]
         public ActionResult Create(string id)
         {
-            SetupTestControls();
-
-            string content = string.Empty;
-
-            int uid;
-            if (int.TryParse(id, out uid))
+            try
             {
-                content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+                SetupTestControls();
 
-                if (content == null)
+                string content = string.Empty;
+
+                int uid;
+                if (int.TryParse(id, out uid))
                 {
-                    var busRule = _service.FindRule(uid);
-                    if (busRule != null)
+                    content = FileUtility.ReadFileFromAppData($"{uid}.xml");
+
+                    if (content == null)
                     {
-                        content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
-                        if (content == null)
+                        var busRule = _service.FindRule(uid);
+                        if (busRule != null)
                         {
-                            content = _service.GenerateXmlForRule(uid);
+                            content = FileUtility.ReadFileFromAppData($"{busRule.rule_name}.xml");
+                            if (content == null)
+                            {
+                                content = _service.GenerateXmlForRule(uid);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(id))
+                else
                 {
-                    content = FileUtility.ReadFileFromAppData($"{id}.xml");
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        content = FileUtility.ReadFileFromAppData($"{id}.xml");
+                    }
+                    else
+                    {
+                        content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                    }
+                }
+
+                if (content != null)
+                {
+                    SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
+                    Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
+                    //if (Rule.IsInitialized())
+                    {
+                        Uri rulePage = new Uri(Rule.RuleState.RulePageUrl);
+                        if (rulePage != null)
+                        {
+                            ViewBag.Action = GetInitializePath(rulePage);
+                            ViewBag.SoaUrl = GetSchemeHostAndPort(rulePage);
+                        }
+                    }
                 }
                 else
                 {
-                    content = FileUtility.ReadFileFromAppData("DefaultBusinessRule.xml");
+                    if (!Rule.IsInitialized())
+                    {
+                        return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                    }
                 }
-            }
 
-            if (content != null)
-            {
-                SqlConnectionStringBuilder remoteConnection = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings["RemoteConnectionString"]);
-                Rule.Initialize(content, new P21.Extensions.DataAccess.DBCredentials(remoteConnection.UserID, remoteConnection.Password, remoteConnection.DataSource, remoteConnection.InitialCatalog));
-            }
-            else
-            {
-                if (!Rule.IsInitialized())
+                if (Rule != null)
                 {
-                    return View("Error", new HandleErrorInfo(new Exception($"Error initializing Web Visual Rule '{id}'"), "Default", "Create"));
+                    return View(Rule);
                 }
             }
-
-            if (Rule != null)
+            catch (Exception ex)
             {
-                return View(Rule);
+                return HandleException(String.Empty, ex, id);
             }
             return View();
+        }
+
+        private static string GetInitializePath(Uri rulePage)
+        {
+            // Get the segments from the Uri.
+            string[] segments = rulePage.Segments;
+
+            // Find the segment "Initialize" and take everything from there.
+            string result = "";
+            bool startAdding = false;
+            foreach (string segment in segments)
+            {
+                if (segment.Trim('/').Equals("Initialize", StringComparison.OrdinalIgnoreCase))
+                {
+                    startAdding = true;
+                }
+
+                if (startAdding)
+                {
+                    result += segment;
+                }
+            }
+
+            // Append the query string if it exists
+            if (!String.IsNullOrEmpty(rulePage.Query))
+            {
+                result += rulePage.Query;
+            }
+
+            return result;
         }
 
         // POST: Default/Create
@@ -234,6 +282,7 @@ namespace P21.Rules.Visual.Controllers
         {
             return Delete(id);
         }
+
         public async Task<string> GetTokenAsync(string soaURL, string userName, string password)
         {
             var tokenUrl = soaURL + "api/security/token/v2";
@@ -365,7 +414,7 @@ namespace P21.Rules.Visual.Controllers
             try
             {
                 Uri uri = Request.Url;
-                ViewBag.rootVBRURL = $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
+                ViewBag.rootVBRURL = GetSchemeHostAndPort(uri);
 
                 ViewBag.BusinessRulesList = new SelectList(_service.GetAllRules(), "business_rule_uid", "rule_name");
             }
@@ -374,6 +423,11 @@ namespace P21.Rules.Visual.Controllers
                 ViewBag.rootVBRURL = ex.ToString();
                 ViewBag.BusinessRulesList = new SelectList(new List<string> { ex.Message });
             }
+        }
+
+        private static string GetSchemeHostAndPort(Uri uri)
+        {
+            return $"{uri.Scheme}://{uri.Host}:{uri.Port}/";
         }
     }
 }

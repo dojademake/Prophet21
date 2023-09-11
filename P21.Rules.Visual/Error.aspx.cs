@@ -1,11 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
-using P21Custom.Extensions.BusinessRule.BLL;
+﻿using P21Custom.Extensions.BusinessRule;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace P21.Rules.Visual
 {
@@ -20,6 +14,7 @@ namespace P21.Rules.Visual
         }
 
         public string lastError;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try

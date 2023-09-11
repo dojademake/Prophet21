@@ -1,206 +1,216 @@
-﻿using P21Custom.Extensions.BusinessRule.BLL;
-using P21.Extensions.BusinessRule;
+﻿using P21.Extensions.BusinessRule;
+using P21Custom.Extensions.BusinessRule;
+using P21Custom.Extensions.BusinessRule.BLL;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
 namespace P21Custom.Extensions
 {
-	public abstract class BaseRule : Rule, IDisposable
-	{
-		private LogicLayer _logic;
-		private LogLevel _logLevel;
-		private bool disposedValue;
+    public class BaseRule : Rule, IDisposable
+    {
+        private LogicLayer _logic;
+        private LogLevel _logLevel;
+        private bool disposedValue;
 
-		public LogLevel LogSeverity
-		{
-			get
-			{
-				if (_logLevel == LogLevel.Unknown)
-				{
-					try
-					{
-						_logLevel = Logger.Threshold;
-					}
-					catch
-					{
-						_logLevel = LogLevel.Error;
-					}
-				}
-				return _logLevel;
-			}
-		}
+        public LogLevel LogSeverity
+        {
+            get
+            {
+                if (_logLevel == LogLevel.Unknown)
+                {
+                    try
+                    {
+                        _logLevel = Logger.Threshold;
+                    }
+                    catch
+                    {
+                        _logLevel = LogLevel.Error;
+                    }
+                }
+                return _logLevel;
+            }
+        }
 
-		internal IRuleLogger Logger { get; private set; }
+        internal IRuleLogger Logger { get; private set; }
 
-		internal LogicLayer Logic
-		{
-			get
-			{
-				if (_logic == null)
-				{
-					_logic = new LogicLayer(this, Logger);
-				}
-				return _logic;
-			}
-		}
+        internal LogicLayer Logic
+        {
+            get
+            {
+                if (_logic == null)
+                {
+                    _logic = new LogicLayer(this, Logger);
+                }
+                return _logic;
+            }
+        }
 
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-			Dispose(disposing: true);
-			GC.SuppressFinalize(this);
-		}
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
 
-		public override string GetName()
-		{
-			return this.GetType().Name;
-		}
+        public override RuleResult Execute()
+        {
+            throw new InvalidOperationException("Cannot execute a base rule. Please execute this method in the class inheriting from BaseRule.");
+        }
 
-		public RuleResult HandleException(Exception ex, MethodBase method, BaseRule rule)
-		{
-			RuleResult result = new RuleResult() { Message = ex.ToString(), Success = false };
-			result.Message = HandleException(ex, method, string.Empty);
+        public override string GetDescription()
+        {
+            throw new MethodAccessException("Get the description at the rule inheriting from this BaseRule.");
+        }
 
-			try
-			{
-				if (Logger.Initialized && LogSeverity < LogLevel.Information)  // Debug, Trace
-				{
-					result.Success = false;
-				}
-			}
-			catch (Exception exc)
-			{
-				result.Message += $"Could not log exception '{ex.Message}' because: {exc.Message}";
-			}
-			return result;
-		}
+        public override string GetName()
+        {
+            return this.GetType().Name;
+        }
 
-		internal string AppSetting(string key, string defaultValue)
-		{
-			if (key == null)
-				return defaultValue;
+        public RuleResult HandleException(Exception ex, MethodBase method, BaseRule rule)
+        {
+            RuleResult result = new RuleResult() { Message = ex.ToString(), Success = false };
+            result.Message = HandleException(ex, method, string.Empty);
 
-			string result = defaultValue;
-			try
-			{
-				var settings = Logic.AppConfiguration.AppSettings.Settings;
-				if (settings.AllKeys.Contains(key))
-				{
-					result = settings[key].Value;
-				}
-				else
-				{
-					if (Logger.Initialized)
-					{
-						Logger.LogWarning($"The '{key}' key is not defined in the {Logic.AppConfiguration.FilePath} config file");
-					}
-				}
+            try
+            {
+                if (Logger.Initialized && LogSeverity < LogLevel.Information)  // Debug, Trace
+                {
+                    result.Success = false;
+                }
+            }
+            catch (Exception exc)
+            {
+                result.Message += $"Could not log exception '{ex.Message}' because: {exc.Message}";
+            }
+            return result;
+        }
 
-				if (string.IsNullOrEmpty(result) && !string.IsNullOrWhiteSpace(defaultValue))
-				{
-					result = defaultValue;
-					if (Logger.Initialized)
-					{
-						Logger.LogDebug($"Default value '{defaultValue}' returned for '{key}' setting.");
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HandleException(ex, MethodBase.GetCurrentMethod(), $"Failed to retrieve '{key}' setting");
-			}
-			return result;
-		}
+        internal string AppSetting(string key, string defaultValue)
+        {
+            if (key == null)
+                return defaultValue;
 
-		internal string HandleException(Exception exception, MethodBase method, string message = "")
-		{
-			string result = message;
+            string result = defaultValue;
+            try
+            {
+                var settings = Logic.AppConfiguration.AppSettings.Settings;
+                if (settings.AllKeys.Contains(key))
+                {
+                    result = settings[key].Value;
+                }
+                else
+                {
+                    if (Logger.Initialized)
+                    {
+                        Logger.LogWarning($"The '{key}' key is not defined in the {Logic.AppConfiguration.FilePath} config file");
+                    }
+                }
 
-			try
-			{
-				string methodName = method.DeclaringType.Name;
+                if (string.IsNullOrEmpty(result) && !string.IsNullOrWhiteSpace(defaultValue))
+                {
+                    result = defaultValue;
+                    if (Logger.Initialized)
+                    {
+                        Logger.LogDebug($"Default value '{defaultValue}' returned for '{key}' setting.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex, MethodBase.GetCurrentMethod(), $"Failed to retrieve '{key}' setting");
+            }
+            return result;
+        }
 
-				result = message;
+        internal string HandleException(Exception exception, MethodBase method, string message = "")
+        {
+            string result = message;
 
-				if (string.IsNullOrWhiteSpace(result))
-				{
-					var level = LogSeverity;
+            try
+            {
+                string methodName = method.DeclaringType.Name;
 
-					switch (level)
-					{
-						case LogLevel.Trace:
-							result = exception.ToString(); 
-							break;
+                result = message;
 
-						case LogLevel.Debug:
-							result = $"{methodName}.{method.Name} failed with message {exception.GetBaseException().Message}";
-							break;
+                if (string.IsNullOrWhiteSpace(result))
+                {
+                    var level = LogSeverity;
 
-						case LogLevel.Information:
-							result = exception.GetBaseException().Message;
-							break;
+                    switch (level)
+                    {
+                        case LogLevel.Trace:
+                            result = exception.ToString();
+                            break;
 
-						case LogLevel.Warning:
-							result = $"{methodName} failed with message {exception.Message}";
-							break;
+                        case LogLevel.Debug:
+                            result = $"{methodName}.{method.Name} failed with message {exception.GetBaseException().Message}";
+                            break;
 
-						case LogLevel.Error:
-							result = $"There was a probem recorded in the '{AppSetting("LogPath","Custom Logging")}' file.";
-							break;
+                        case LogLevel.Information:
+                            result = exception.GetBaseException().Message;
+                            break;
 
-						case LogLevel.Critical:
-							result = $"Something went wrong. Please contact support.";
-							break;
-					}
-				}
+                        case LogLevel.Warning:
+                            result = $"{methodName} failed with message {exception.Message}";
+                            break;
 
-				if (Logger.Initialized)
-				{
-					Logger.LogCritical(message, exception);
-				}
-				else
-				{
-					result = $"Unable to log: {result}";
-				}
-			}
-			catch (Exception exc)
-			{
-				string originalException = string.Empty;
-				if (exception != null)
-				{
-					originalException = exception.Message;
-				}
-				result = $"WARNING: an exception occurred while handling exception. {result} {originalException}";
-				if (Logger.Initialized)
-				{
-					Logger.LogCritical(result, new Exception(exception.Message, exc));
-				}
-			}
-			return result;
-		}
-		
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!disposedValue)
-			{
-				if (disposing)
-				{
-					// TODO: dispose managed state (managed objects)
-				}
+                        case LogLevel.Error:
+                            result = $"There was a probem recorded in the '{AppSetting("LogPath", "Custom Logging")}' file.";
+                            break;
 
-				// TODO: free unmanaged resources (unmanaged objects) and override finalizer
-				// TODO: set large fields to null
-				disposedValue = true;
-			}
-		}
+                        case LogLevel.Critical:
+                            result = $"Something went wrong. Please contact support.";
+                            break;
+                    }
+                }
 
-		// // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-		// ~BaseRule()
-		// {
-		//     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-		//     Dispose(disposing: false);
-		// }
-	}
+                if (Logger.Initialized)
+                {
+                    Logger.LogCritical(message, exception);
+                }
+                else
+                {
+                    result = $"Unable to log: {result}";
+                }
+            }
+            catch (Exception exc)
+            {
+                string originalException = string.Empty;
+                if (exception != null)
+                {
+                    originalException = exception.Message;
+                }
+                result = $"WARNING: an exception occurred while handling exception. {result} {originalException}";
+                if (Logger.Initialized)
+                {
+                    Logger.LogCritical(result, new Exception(exception.Message, exc));
+                }
+            }
+            return result;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~BaseRule()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+    }
 }

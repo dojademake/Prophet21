@@ -151,8 +151,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CustomHandleErrorAttribute.cs" />
+    <Compile Include="Utilities\DebugRuleLogger.cs" />
     <Compile Include="Utilities\FileUtility.cs" />
-    <Compile Include="Utilities\RuleLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DefaultBusinessRule.xml" />
